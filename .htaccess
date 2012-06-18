@@ -1,0 +1,67 @@
+# Uncomment next line if you get 404 error on accounts page
+# Options -MultiViews
+
+# Uncomment following 2 lines to increase page speed
+# ExpiresActive On
+# ExpiresDefault "access plus 1 year"
+
+<IfModule mod_rewrite.c>
+# enable mod_rewrite
+RewriteEngine on
+
+# SECTION 1
+# correct urls for yahoo bot
+RewriteCond %{REQUEST_URI} !\..+$
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule (.*) %{REQUEST_URI}/ [R=301,L]
+
+# mod_rewrite rules for view account page
+RewriteRule ^accounts/$ accounts.php [QSA,L]
+RewriteRule ^accounts/(.*)/$ accounts.php?alpha=$1 [QSA,L]
+RewriteRule ^accounts/(.*).html$ view-account.php?account=$1 [QSA,L]
+
+# SECTION 2
+# mod_rewrite rules for ROOT category
+RewriteRule ^index([0-9]+).html$ index.php?category=0&page=$1 [QSA,L]
+
+# SECTION 3
+# mod_rewrite rules for categories pages with HTML path option disable
+RewriteRule ^(.*)/$ index.php?category=$1 [QSA,L]
+RewriteRule ^(.*)/index([0-9]+).html$ index.php?category=$1&page=$2 [QSA,L]
+
+# SECTION 4
+# mod_rewrite rule for suggest listing page
+RewriteRule report-listing.php$ report-listing.php [QSA,L]
+
+# SECTION 5
+RewriteRule ^([a-z]+)-listings.html$ listings.php?view=$1 [QSA,L]
+RewriteRule ^([a-z]+)-listings([0-9]+).html$ listings.php?view=$1&page=$2 [QSA,L]
+
+# SECTION 6
+# mod_rewrite rules for view listing page
+RewriteRule ^([^/]+)-l([0-9]+).html$ view-listing.php?cat=&title=$1&id=$2 [QSA,L]
+RewriteRule ^(.*)/([^/]+)-l([0-9]+).html$ view-listing.php?cat=$1&title=$2&id=$3 [QSA,L]
+
+# SECTION 7
+# mod_rewrite rules for error pages
+RewriteRule ^([0-9]+).htm$ error.php?error=$1 [QSA,L]
+
+# SECTION 8
+# mod_rewrite rules for suggest category page
+RewriteRule ^suggest-category-([0-9]+).html$ suggest-category.php?id=$1 [QSA,L]
+
+# SECTION 9
+RewriteRule ^LICENSE.htm$ LICENSE.htm [QSA,L]
+
+# SECTION 10
+# mod_rewrite rules for categories pages
+RewriteRule ^(.*)_([0-9]+).html$ index.php?category=$1&page=$2 [QSA,L]
+RewriteRule ^(.*).html?(.*)$ index.php?category=$1&$2 [QSA,L]
+RewriteRule ^(.*).html$ index.php?category=$1 [QSA,L]
+</IfModule>
+
+# SECTION 11
+ErrorDocument 500 500.htm
+ErrorDocument 404 404.htm
+ErrorDocument 403 403.htm
+ErrorDocument 401 401.htm

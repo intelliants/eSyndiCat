@@ -1,0 +1,4 @@
+<Files ~ "\.(tpl|inc|cfg)$">
+	Order deny,allow
+	Deny from all
+</Files>

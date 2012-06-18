@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>{title}</title>
+	<style type="text/css">
+		html, body
+		{
+			margin:0;
+			padding:0;
+			background:#eef8f9;
+			height:100%;
+			font:normal 12px 'Trebuchet MS',Arial,Verdana,sans-serif;
+			color:#4e4e4e;
+		}
+		a
+		{
+			color:#1f599f;
+		}
+		a:hover
+		{
+			text-decoration:none;
+		}
+		img
+		{
+			border:0;
+		}
+		p
+		{
+			margin:0;
+			padding:5px 0;
+		}
+		div.error
+		{
+			background:#e2e2e2;
+			padding:1px;
+			margin:67px auto 0 auto;
+			width:618px;
+		}
+		div.error .inner
+		{
+			width:443px;
+			background:#f8f8f8 url('{base_url}includes/common/img/error.gif') 25px 25px no-repeat;
+			padding:25px 75px 25px 100px;
+		}
+		div.msg_error
+		{
+			background:#ff9174;
+			padding: 5px;
+			font-weight: bold;
+			color:#861c00;
+		}
+		h1
+		{
+			color:#4e4e4e;
+			font-size:17px;
+			margin:0;
+			padding:20px 0;
+		}
+		div.logo
+		{
+			padding:10px 0 0 0;
+		}
+		input[type="submit"].common, input[type="button"].common
+		{
+			border:0;
+			margin:0;
+			padding:0;
+			background:#6c9ec1 url('{base_url}includes/common/img/buttons.gif') 0 -28px no-repeat;
+			color:#fff;
+			cursor:pointer;
+			text-align:center;
+			width:100px;
+			height:28px;
+		}
+		input[type="submit"].common:hover, input[type="button"].common:hover
+		{
+			background:#4a7dbb url('{base_url}includes/common/img/buttons.gif') 0 0 no-repeat;
+			color:#ffda2f;
+		}
+		
+	</style>
+	<script type="text/javascript" src="{base_url}js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="{base_url}js/jquery/plugins/jquery.corner.js"></script>
+</head>
+
+<body>
+	<div class="error">
+		<div class="inner">
+			<div class="logo"><img src="{base_url}includes/common/img/logo-light.png" alt="eSyndiCat" /></div>
+			
+			<h1>{error_title}</h1>
+
+			<p><b>{error_description}</b>&nbsp;{error_solutions}</p>
+		
+			<p class="solution">If you are not sure what this error means you can always visit <a href="http://www.esyndicat.com/forum/">eSyndiCat Support Forums</a>&nbsp;or try&nbsp;<a href="http://www.esyndicat.com/docs/errors/{error_key}.html">these solutions</a>.</p>
+
+		</div>
+	</div>
+
+	{additional}
+
+	<script type="text/javascript">
+		$("div.error .inner").corner("bevel 2px").parent().corner("bevel 3px");
+	</script>
+</body>
+
+</html>

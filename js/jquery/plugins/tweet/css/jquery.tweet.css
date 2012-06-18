@@ -1,0 +1,26 @@
+div.tb_tweet
+{
+	clear:both;
+	padding:5px;
+	border-bottom:1px solid #ccc;
+	min-height:48px;
+}
+div.tb_tweet:hover
+{
+	background:#eef9ff;
+	border-bottom:1px solid #a6cee1;
+}
+a.tb_photo
+{
+	float:left;
+	padding:0 5px 0 0;
+}
+span.tb_author
+{
+	font-weight:bold;
+}
+p.tb_tweetinfo
+{
+	float:right;
+	font-size:11px;
+}

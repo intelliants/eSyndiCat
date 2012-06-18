@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- The name of template -->
+<!-- @name the name must be unique -->
+<template name="cleancss">
+	<!-- The title of template -->
+	<title>CleanCSS Template for eSyndiCat</title>
+	
+	<!-- The description of template -->
+	<summary>CleanCSS is the default template for 2.3 version. It's pretty simple without any graphics.</summary>
+	
+	<!-- The author of template -->
+	<author>Sergey Ten</author>
+	
+	<!-- The contributor of template -->
+	<contributor>Intelliants LLC</contributor>
+	
+	<!-- The version of template -->
+	<version>1.6</version>
+	
+	<!-- The date of release -->
+	<date>2009-02-11</date>	
+
+	<!-- The min version of script with the template will work -->
+	<compatibility>1.7</compatibility>
+	
+	<!-- The status of template -->
+	<!-- Must be active or inactive. Other statuses will be ignore and set inactive status -->
+	<status>active</status>
+
+	<!-- Phrases for template -->
+	<!-- @key the key of phrase must be unique -->
+	<!-- @lang the language of phrase -->
+	<!-- @category the category of phrase -->
+	<!-- @code the code of language -->
+	<phrases>
+		<phrase key="test" lang="English" category="admin" code="en">Question is empty (after)</phrase>
+		<phrase key="test1" lang="English" category="admin" code="en">Question has been added (after)</phrase>
+	</phrases>
+	
+	<!-- The configuration of template -->
+	<!-- @configgroup the name of configuration group -->
+	<!-- @name the name of configuration -->
+	<!-- @type the type of configuration (text, textarea, checkbox, radio, select, combo, divider, hidden, password) -->
+	<!-- @description of configuration -->
+	<!-- @multiplevalues of configuration -->
+	<config configgroup="general" name="esyndicat_block_positions" type="hidden" description="position">left,right,top,center,bottom,user1,user2,verybottom,verytop</config>
+	<config configgroup="general" name="ckeditor_color" type="hidden" description="CKEditor color">#F00</config>
+
+</template>

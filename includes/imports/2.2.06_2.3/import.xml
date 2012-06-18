@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<import>
+	<sql>
+		<notes>admin_pages table created</notes>
+		<query><![CDATA[
+CREATE TABLE `{prefix}admin_pages` (
+	`id` int(11) NOT NULL auto_increment,
+	`block_name` varchar(100) NOT NULL default '',
+	`title` varchar(50) NOT NULL default '',
+	`file` varchar(255) NOT NULL default '',
+	`attr` varchar(100) NOT NULL default '',
+	`params` varchar(255) NOT NULL default '',
+	`aco` varchar(30) NOT NULL default '',
+	`menus` set('main','header') default NULL,
+	`plugin` varchar(50) NOT NULL default '',
+	`order` float NOT NULL default '0',
+	`header_order` float NOT NULL default '0',
+	PRIMARY KEY  (`id`)
+);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to admin_pages table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}admin_pages` (`id`, `block_name`, `title`, `file`, `attr`, `params`, `aco`, `menus`, `plugin`, `order`, `header_order`) VALUES
+(NULL, 'common', 'Admin Panel', 'index', '', '', 'index', 'main', '', 1, 0),
+(NULL, 'common', 'Configuration', 'configuration', '', '', 'configuration', 'main', '', 2, 0),
+(NULL, 'common', 'Manage Plugins', 'plugins', '', '', 'plugins', 'main', '', 3, 0),
+(NULL, 'common', 'Manage Admins', 'admins', '', '', 'admins', 'main', '', 4, 0),
+(NULL, 'common', 'Manage Database', 'database', '', '', 'database', 'main', '', 5, 0),
+(NULL, 'common', 'Manage Accounts', 'accounts', '', '', 'accounts', 'main', '', 6, 0),
+(NULL, 'common', 'Manage Pages', 'pages', '', '', 'pages', 'main', '', 7, 0),
+(NULL, 'common', 'Manage Plans', 'plans', '', '', 'plans', 'main', '', 9, 0),
+(NULL, 'common', 'Manage Templates', 'templates', '', '', 'templates', 'main', '', 10, '0'),
+(NULL, 'common', 'Transactions', 'transactions', '', '', 'transactions', 'main', '', 11, 0),
+(NULL, 'common', 'Language Manager', 'language', '', '', 'language', 'main', '', 12, 0),
+(NULL, 'common', 'Manage Blocks', 'blocks', '', '', 'blocks', 'main', '', 13, 0),
+(NULL, 'common', 'Visual Manage', 'visual', 'target="_blank"', '', 'visual', 'main', '', 14, 0),
+(NULL, 'categories', 'Browse Categories', 'browse', '', '', 'browse', 'main,header', '', 4, 5),
+(NULL, 'categories', 'Manage Categories', 'categories', '', '', 'categories', 'main', '', 2, 0),
+(NULL, 'categories', 'Create Category', 'suggest-category', '', '', 'create_category', 'main,header', '', 3, 4),
+(NULL, 'categories', 'Category Icons', 'category-icons', '', '', 'category_icons', 'main', '', 4, 0),
+(NULL, 'listings', 'Create Listing', 'suggest-listing', '', '', 'create_listing', 'main,header', '', 1, 1),
+(NULL, 'listings', 'Manage Listings', 'listings', '', '', 'listings', 'main,header', '', 2, 2),
+(NULL, 'listings', 'Search Listings', 'search', '', '', 'search_listings', 'main', '', 3, 0),
+(NULL, 'listings', 'Search Sections', 'search-sections', '', '', 'search_sections', 'main', '', 5, 0),
+(NULL, 'listings', 'Manage Listing Fields', 'listing-fields', '', '', 'listing_fields', 'main', '', 4, 0),
+(NULL, '', 'divider', '', '', '', '', 'header', '', 3, 3),
+(NULL, '', 'Update Version', 'update', '', '', '', NULL, '', 0, 0),
+(NULL, '', 'Importer', 'importer', '', '', 'importer', 'header', '', 0, 6),
+(NULL, '', 'divider', '', '', '', '', 'header', '', '0', '5');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>tab_pages table created</notes>
+		<query><![CDATA[
+CREATE TABLE `{prefix}tab_pages` (
+	`id` int(11) NOT NULL auto_increment,
+	`tab_name` varchar(255) NOT NULL default '',
+	`page_name` varchar(255) NOT NULL default '',
+	PRIMARY KEY  (`id`)
+); 
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>tabs table created</notes>
+		<query><![CDATA[
+CREATE TABLE IF NOT EXISTS `{prefix}tabs` (
+	`name` varchar(255) NOT NULL default '',
+	`sticky` enum('1','0') NOT NULL default '1',
+	`order` float NOT NULL default '0',
+	PRIMARY KEY  (`name`)
+);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to tabs table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}tabs` VALUES
+('help', '1', 1),
+('search', '1', 2);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>tips table created</notes>
+		<query><![CDATA[
+CREATE TABLE `{prefix}tips` (
+	`id` int(11) NOT NULL auto_increment,
+	`key` varchar(255) NOT NULL default '',
+	`page` varchar(30) NOT NULL default '',
+	`title` varchar(255) NOT NULL default '',
+	`content` text NOT NULL,
+	PRIMARY KEY  (`id`)
+);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to tips table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}tips` (`id`, `key`, `page`, `title`, `content`) VALUES
+(1, 'accounts', 'configuration', 'Accounts', 'Enables accounts for your eSyndiCat Directory'),
+(2, 'accounts_autoapproval', 'configuration', 'Accounts Auto Approval', 'Sends out confirmation emails and automatically approves accounts.'),
+(3, 'accounts_registered', 'configuration', 'Allow submissions for guests', 'Disabling this, reduces spam posts.'),
+(4, 'admin_online_expiry_time', 'configuration', 'Administrator expiration time', 'Admin remains logged in during idle.'),
+(5, 'display_news', 'configuration', 'Display eSyndiCat news', 'Displays eSyndiCat news within the adminCP'),
+(6, 'display_new_plugins', 'configuration', 'Display New Plugins', 'Notifies when a new plugin is available.'),
+(7, 'captcha', 'configuration', 'Captcha', 'Activates Captcha'),
+(8, 'captcha_name', 'configuration', 'Name of Captcha', 'kcaptcha is default'),
+(9, 'captcha_preview', 'configuration', 'Captcha preview', 'Displays what the image will look like.'),
+(10, 'captcha_case_sensitive', 'configuration', 'Case Sensitive', 'Default is enable; Exact entry is needed.'),
+(11, 'captcha_num_chars', 'configuration', 'Number of Characters', 'Recommended to use 4 or 5 letters.'),
+(12, 'suggest_category', 'configuration', 'Allow category submission', 'This displays the Submit Category link'),
+(13, 'use_html_path', 'configuration', 'Use .html extension in category URL', 'This places all of the categories as /"yourcategory".html'),
+(14, 'related', 'configuration', 'Related categories display', 'Displays the Related Categories links at the bottom of the category used'),
+(15, 'neighbour', 'configuration', 'Neighbour categories display', 'Displays Neighbor categories within the category chosen'),
+(16, 'show_children_listings', 'configuration', 'Show subcategories listings in the parents', 'Shows listings in the categories within the main category'),
+(17, 'categories_order', 'configuration', 'Categories sorting', 'Preferred sorting can be defined by Title or Order'),
+(18, 'categories_tree_type', 'configuration', 'Category selection method', 'Define as a Directory Tree like in 2.2 or Dropdown selection'),
+(19, 'num_categories_cols', 'configuration', 'Number of columns', 'Displays the number of columns for your categories'),
+(20, 'num_listings_display', 'configuration', 'Listings count indicator', 'Shows a listing display showing category and listing numbers'),
+(21, 'subcats_display', 'configuration', 'Number of subcategories', 'Displays the subcategories listings under the main category'),
+(22, 'cron_recip', 'configuration', 'Cron for checking reciprocal listings', 'Checks reciprocal status and disables the listing.'),
+(23, 'cron_broken', 'configuration', 'Gets listing status (checking for broken listings)', 'This updates listing status.'),
+(24, 'cron_pagerank', 'configuration', 'Cron for listings pagerank update', 'This will update the pagerank of sites.'),
+(25, 'cron_num_listings', 'configuration', 'Number of listings to check in one run', 'Default is 10; Perfect for shared hosting accounts. VPS 25-35, Dedicated 100.'),
+(26, 'cron_check_interval', 'configuration', 'Check interval (in days)', '1 is default; Recommended for large directories.'),
+(27, 'cron_report_job', 'configuration', 'CRON should send email each CronJob', 'Sends an email after cronjob is complete.'),
+(28, 'cron_report_job_extra', 'configuration', 'Include list of listing URLs (each CronJob)', 'Includes the what listings were updated in the email.'),
+(29, 'cron_report_cycle', 'configuration', 'CRON should send email after all listings will be checked', 'After all listings are checked, An email will notify you.'),
+(30, 'cron_report_cycle_extra', 'configuration', 'Include list of listing URLs (each CronCycle)', 'Listing will include all listings that were completed.'),
+(31, 'cron_backup', 'configuration', 'Backup cron functionality', 'Enables a backup of your database.'),
+(32, 'cron_backup_archive', 'configuration', 'Archive Data (Zlib PHP requires)', 'Enabled will backup the database into a zip file to conserve space.'),
+(33, 'cron_backup_interval', 'configuration', 'Make backup each [..] day(s)', 'Default is 30 days, If your site is active, it is recommended to reduce the time.'),
+(34, 'sponsored_listings', 'configuration', 'Sponsored listings functionality', 'Enable to offer paid listings.'),
+(35, 'currency_symbol', 'configuration', 'Currency symbol', 'Default is $.'),
+(36, 'sponsored_only', 'configuration', 'Only sponsored accepted', 'Offer only paid listings when enabled.'),
+(37, 'num_sponsored_display', 'configuration', 'Number of Sponsored listings that should be displayed', 'Determines how many will be displayed in your sponsored listings block.'),
+(38, 'payment_transactions', 'configuration', 'Logging payment transactions', 'Records the payment transactions of your account holders.'),
+(39, 'mcross_functionality', 'configuration', 'MultiCrossing functionality', 'Enable this to allow submissions to cross categories.'),
+(40, 'mcross_number_links', 'configuration', 'Number of links to cross', 'Determines how many categories a listing is allow to cross.'),
+(41, 'mcross_only_sponsored', 'configuration', 'MultiCrossing only for sponsored listings', 'Enabled only for Paid listings.'),
+(42, 'site', 'configuration', 'Site title', 'This will be your site''s name.'),
+(43, 'site_logo', 'configuration', 'Site Logo', 'Upload your logo here, keep the image size.'),
+(44, 'backup', 'configuration', 'Directory for database backups', 'Default is backup/  recommended that you do not alter.'),
+(45, 'admin', 'configuration', 'Admin directory', 'Default is admin/ recommended that you do not alter.'),
+(46, 'site_email', 'configuration', 'Email', 'Email address you wish to get account changes and alerts sent to.'),
+(47, 'bugs_email', 'configuration', 'Bugs email', 'Email address you wish to be alerted if there is a problem.'),
+(48, 'lang', 'configuration', 'Script language', 'Select your preferred language of your site.'),
+(49, 'charset', 'configuration', 'Default charset for pages', 'Default is UTF-8.'),
+(50, 'date_format', 'configuration', 'Date format', 'Select your preferred date format %e is timezone,  %Y is 4-digit year.'),
+(51, 'suffix', 'configuration', 'Suffix for page titles', 'This is the 2nd description for your Title bar.'),
+(52, 'title_breadcrumb', 'configuration', 'Full path to category in title', 'Produces breadcrumbs in Title.'),
+(53, 'language_switch', 'configuration', 'Language switching', 'Allows users on the front of your site changed language.'),
+(54, 'mod_rewrite', 'configuration', 'Apache mod_rewrite module', 'Produces SEO friendly URLs.'),
+(55, 'old_pages_urls', 'configuration', 'eSyndiCat 2.2 style pages URLs', 'Uses the original 2.2 style SEO URLs.'),
+(56, 'caching', 'configuration', 'Caching', 'If you are using slow shared hosting, this will cache your pages for faster loading.'),
+(57, 'display_frontend', 'configuration', 'Display FrontEnd', 'Enabling the Frontend displays your site as intended.'),
+(58, 'underconstruction', 'configuration', 'Under construction message', 'If Display Frontend is disabled.  The below message will be shown.'),
+(59, 'listing_check', 'configuration', 'Checking for broken listings', 'Enabling this will check from broken listings.'),
+(60, 'reciprocal_check', 'configuration', 'Reciprocal listing checking', 'Enable this for link checking; Cron configuration is required.'),
+(61, 'reciprocal_required_only_for_free', 'configuration', 'Reciprocal required for free listings', 'Enable this for gaining a link exchange function.'),
+(62, 'reciprocal_domain', 'configuration', 'Domain sensitive', 'Makes reciprocal domain name sensitive.'),
+(63, 'reciprocal_text', 'configuration', 'Reciprocal checking for the following URL', 'This is your preferred domain you want to promote.'),
+(64, 'recip_featured', 'configuration', 'Make featured', 'Allows reciprocal listings to be featured.'),
+(65, 'reciprocal_label', 'configuration', 'Reciprocal text on the suggest listing page', 'This text can be edited to fit your needs.'),
+(66, 'reciprocal_code', 'configuration', 'Reciprocal code', 'This code is for the client to paste within his site for Reciprocal listing checks.'),
+(67, 'duplicate_checking', 'configuration', 'Duplicate listing checking', 'Enables Duplicate listing Check; Frequency is determined in Cron Configuration.'),
+(68, 'duplicate_type', 'configuration', 'Duplicate checking type', 'Checks links based on the dropdown choice.'),
+(69, 'duplicate_visitors', 'configuration', 'Disabled in admin panel', 'Disables Link Checking'),
+(70, 'allow_listings_submission', 'configuration', 'Allow listing submission', 'Enables the Submit Listings button.'),
+(71, 'auto_approval', 'configuration', 'Auto approval on submission', 'Automatic Submission approval; Note: Do not enable if you want to manually approve listings.'),
+(72, 'new_window', 'configuration', 'Open listings in a new window', 'Opens a new window when directed to the listing.'),
+(73, 'forward_to_listing_details', 'configuration', 'Forward to listing details', 'Opens the on-site listing instead of being forwards to the actual site.'),
+(74, 'pagerank', 'configuration', 'Google PageRank display', 'Shows the pagerank on both the site details and truncated listings.'),
+(75, 'thumbshot', 'configuration', 'Display thumbshots', 'Displays a small screen capture of the listings website.'),
+(76, 'broken_listings_report', 'configuration', 'Broken listings report', 'Enabling this will check the broken listings and send an email report.\r\n'),
+(77, 'num_index_listings', 'configuration', 'Number of listings per page', 'Selecting how many listings you want displayed per page. Default is 10.'),
+(78, 'num_get_listings', 'configuration', 'Number of listings(Top, New, Popular)', 'Select the number of listings you want displayed on the Top, New and Popular listings pages.'),
+(79, 'num_featured_display', 'configuration', 'Number of listings in Featured Box', 'Displays the selected number of listings you want in the Featured box.'),
+(80, 'num_partner_display', 'configuration', 'Number of listings in Partners Box', 'Displays the selected number of listings you want in the Partners box.'),
+(81, 'html_tags', 'configuration', 'Allow HTML (highly NOT recommended)', 'This allows html in the Editors box, this will allow users to display unwanted links within the listing. (Not recommended).'),
+(82, 'visitor_sorting', 'configuration', 'Allow listing ordering for visitors', 'Enabling this will allow users to view listings by alpha, rank, clicks or date.'),
+(83, 'listings_sorting', 'configuration', 'Listings order by', 'This will be the default setting for users to start viewing the listings.'),
+(84, 'listings_sorting_type', 'configuration', 'Listings order type', 'Ascending or Descending settings will determine by preference.'),
+(85, 'expiration_period', 'configuration', 'Listing expiration period (days)', 'If a listing is not paid or subscription expires, the number of days before action below is taken.'),
+(86, 'expiration_action', 'configuration', 'Listing expiration action', 'When the days allowed above expire, this setting will determine what action is to be taken. Default is Nothing.'),
+(87, 'mail_function', 'configuration', 'Mail method', 'The Mail Method to send emails.'),
+(88, 'mimetype', 'configuration', 'Mime-Type', 'Determines whether you want to send text or html emails (templates located in the Email Template tab to the left).'),
+(89, 'sendmail_path', 'configuration', 'Path to sendmail', 'Default is /usr/bin/sendmail'),
+(90, 'smtp_server', 'configuration', 'SMTP Server', 'That would be Ex. (smtp.yourdomain.com)'),
+(91, 'smtp_user', 'configuration', 'SMTP Server Username', 'The username is specified with your email/hosting provider.'),
+(92, 'smtp_password', 'configuration', 'SMTP Server Password', 'Password for the username above.'),
+(93, 'categories_display_type', 'configuration', 'Categories display type', 'Defines categories display type.<br />\r\nExample:<br />\r\n<pre>Horizontal:\r\na b c d\r\ne f g h\r\nVertical:\r\na c e g \r\nb d f h</pre>');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>actions table created</notes>
+		<query><![CDATA[
+CREATE TABLE `{prefix}actions` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR( 255 ) NOT NULL ,
+	`url` varchar(255) NOT NULL default '',
+	`plugin` varchar(50) NOT NULL default '',
+	`order` FLOAT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to actions table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}actions` (`id`, `name`, `url`, `order`) VALUES
+(1, 'action_favorite', '', 1),
+(2, 'report_listing', '', 2);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>action_show table created</notes>
+		<query><![CDATA[
+CREATE TABLE `{prefix}action_show` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`page` VARCHAR( 100 ) NOT NULL ,
+	`action_name` VARCHAR(255) NOT NULL default '',
+	PRIMARY KEY (`id`)
+);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to action_show table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}action_show` (`id`, `page`, `action_name`) VALUES
+(1, 'view_listing', 'action_favorite'),
+(2, 'view_listing', 'report_listing');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Drop acos table</notes>
+		<query><![CDATA[
+DROP TABLE `{prefix}acos`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>drop admin_block_groups</notes>
+		<query><![CDATA[
+DROP TABLE `{prefix}admin_block_groups`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>admin_blocks altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}admin_blocks`
+    ADD `name` varchar(100) NOT NULL DEFAULT '' FIRST,
+    ADD `plugin` varchar(50) NOT NULL DEFAULT '' AFTER `name`,
+    DROP `id`,
+    DROP `admin_block_group_id`,
+    DROP `url`,
+    MODIFY `order` float unsigned NOT NULL DEFAULT '0';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to admin_blocks table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}admin_blocks` (`name`, `plugin`, `title`, `order`) VALUES
+	('common', '', 'Common', 1),
+	('categories', '', 'Categories', 2),
+	('listings', '', 'Listings', 3),
+	('plugins', '', 'Plugins', 5);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>admins table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}admins` MODIFY `status` enum('inactive','active') NOT NULL DEFAULT 'active';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>blocks table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}blocks` MODIFY `status` enum('active','inactive') NOT NULL DEFAULT 'active', CHANGE `position` `position` VARCHAR( 50 ) NOT NULL DEFAULT 'left', ADD `collapsible` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `show_header`, ADD `rss` VARCHAR( 255 ) NOT NULL;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to blocks table</notes>
+		<query><![CDATA[
+			INSERT INTO `{prefix}blocks` (`id`, `title`, `contents`, `order`, `lang`, `position`, `type`, `plugin`, `status`, `show_header`, `sticky`, `multi_language`) VALUES (123, 'Actions', '{if isset($esyndicat_actions) && !empty($esyndicat_actions)}{foreach from=$esyndicat_actions item=action}\r\n	{assign var="action_key" value="esyndicat_action_"|cat:$action.name}\r\n\r\n	{if $action.name eq ''action_favorite''}\r\n		{if $esynAccountInfo}\r\n			{if $esynAccountInfo.id neq $listing.account_id}\r\n				{assign var="fav_array" value='',''|explode:$listing.fav_accounts_set}\r\n				{if !empty($fav_array) && in_array($esynAccountInfo.id, $fav_array)}\r\n					<a href="{if $action.url eq ''''}#{else}{$action.url}{/if}" class="esynactions_remove-favorite_{$listing.id}_{$esynAccountInfo.id}">{$lang.remove_from_favorites}</a><br />\r\n				{else}\r\n					<a href="{if $action.url eq ''''}#{else}{$action.url}{/if}" class="esynactions_add-favorite_{$listing.id}_{$esynAccountInfo.id}">{$lang.add_to_favorites}</a><br />\r\n				{/if}\r\n			{/if}					\r\n		{/if}\r\n	{else}\r\n		<a href="{if $action.url eq ''''}#{else}{$action.url}{/if}" class="esynactions_{$action.name|replace:"_":"-"}_{$listing.id}">{$lang.$action_key}</a><br />\r\n	{/if}\r\n{/foreach}{/if}', 4, 'en', 'right', 'smarty', '', 'active', 1, 0, 1);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Update data in the blocks table</notes>
+		<query><![CDATA[
+			UPDATE `{prefix}blocks` SET `contents` = '{if $config.accounts}\r\n	<!-- accounts box start -->\r\n	{if $esynAccountInfo}\r\n		{$lang.welcome}, <strong>{$esynAccountInfo.username}</strong>!\r\n		<ul class="account-menu">\r\n			{foreach from=$menus.account item=menu}\r\n				{if $menu.name eq $smarty.const.ESYN_REALM}\r\n					<li class="active">\r\n						<div>{$menu.title}</div>\r\n					</li>\r\n				{else}\r\n					<li>\r\n						<a href="{$menu.url}"{if isset($menu.no_follow)}{$menu.no_follow}{/if}>{$menu.title}</a>\r\n					</li>\r\n				{/if}\r\n			{/foreach}\r\n\r\n			<li>\r\n				<a href="logout.php?action=logout">{$lang.logout}</a>\r\n			</li>\r\n		</ul>\r\n	{else}\r\n		<form action="{$smarty.const.ESYN_URL}login.php" method="post">\r\n			<table class="no" cellpadding="2" cellspacing="0">\r\n			<tr>\r\n				<td>{$lang.username}:<br />\r\n					<input type="text" tabindex="1" class="text" name="username" size="18" value="" />\r\n				</td>\r\n			</tr>\r\n			<tr>\r\n				<td>{$lang.password}:<br />\r\n					<input type="password" class="text" tabindex="2" name="password" size="18" value="" />\r\n				</td>\r\n			</tr>\r\n			<tr>\r\n				<td colspan="2" style="font-size: 10px;">\r\n					<input type="submit" class="button" tabindex="6" name="login" value="{$lang.login}" />\r\n					<a href="{$smarty.const.ESYN_URL}forgot.php">{$lang.forgot}</a>\r\n					<a href="{$smarty.const.ESYN_URL}register.php" rel="nofollow">{$lang.register}</a>\r\n				</td>\r\n			</tr>\r\n			</table>\r\n		</form>\r\n	{/if}\r\n	<!-- accounts box end -->\r\n{/if}' WHERE `id` = '6';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>block_show table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}block_show` CHANGE `aco_name` `page` VARCHAR( 100 ) NOT NULL DEFAULT '';
+		]]></query>
+</sql>
+
+	<sql>
+		<notes>Insert data to block_show table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}block_show` (`page`, `block_id`) VALUES ('view_listing', 123);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>categories table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}categories`
+    ADD `icon` varchar(255) NOT NULL DEFAULT '' AFTER `page_title`,
+	ADD `confirmation` enum('0','1') NOT NULL DEFAULT '0' AFTER `no_follow`,
+	ADD `hidden` enum('0','1') NOT NULL DEFAULT '0' AFTER `locked`,
+    ADD `confirmation_text` text NOT NULL DEFAULT '' AFTER `confirmation`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>config table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}config`
+    ADD `group_name` varchar(50) NOT NULL DEFAULT '' AFTER `id`,
+    ADD `plugin` varchar(50) NOT NULL DEFAULT '' AFTER `description`,
+	ADD `editor` ENUM( '0', '1' ) NOT NULL DEFAULT '0' AFTER `plugin`,
+    MODIFY `type` enum('text','textarea','checkbox','radio','select','divider','hidden','password','image') NOT NULL DEFAULT 'text';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to config table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}config` (`id`, `group_name`, `name`, `value`, `multiple_values`, `type`, `description`, `plugin`, `order`) VALUES
+(NULL, '', 'htaccessfile_0', '<IfModule mod_rewrite.c>\r\n# enable mod_rewrite\r\nRewriteEngine on\r\n\r\n', '', 'hidden', 'htaccess top section', '', 0),
+(NULL, '', 'htaccessfile_1', '# SECTION 1\r\n# correct urls for yahoo bot\r\nRewriteCond %{REQUEST_URI} !..+$\r\nRewriteCond %{REQUEST_URI} !/$\r\nRewriteRule (.*) %{REQUEST_URI}/ [R=301,L]\r\n\r\n# mod_rewrite rules for plugins\r\nRewriteRule ^mod/([a-zA-Z0-9]+)/$ controller.php?plugin=$1 [QSA,L]\r\nRewriteRule ^mod/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ controller.php?plugin=$1&file=$2 [QSA,L]\r\nRewriteRule ^mod/([a-zA-Z0-9]+)/([a-zA-Z0-9]+).html$ controller.php?plugin=$1&file=$2 [QSA,L]\r\n\r\n# mod_rewrite rules for view account page\r\nRewriteRule ^accounts/$ accounts.php [QSA,L]\r\nRewriteRule ^accounts/(.*)/$ accounts.php?alpha=$1 [QSA,L]\r\nRewriteRule ^accounts/(.*).html$ view-account.php?account=$1 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 1', '', 0),
+(NULL, '', 'htaccessfile_2', '# SECTION 2\r\n# mod_rewrite rules for ROOT category\r\nRewriteRule ^index([0-9]+).html$ index.php?category=0&page=$1 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 2', '', 0),
+(NULL, '', 'htaccessfile_3', '# SECTION 3\r\n# mod_rewrite rules for categories pages with HTML path option disable\r\nRewriteRule ^(.*)/$ index.php?category=$1 [QSA,L]\r\nRewriteRule ^(.*)/index([0-9]+).html$ index.php?category=$1&page=$2 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 3', '', 0),
+(NULL, '', 'htaccessfile_4', '# SECTION 4\r\n# mod_rewrite rule for suggest listing page\r\nRewriteRule report-listing.php$ report-listing.php [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 4', '', 0),
+(NULL, '', 'htaccessfile_5', '# SECTION 5\r\nRewriteRule ^([a-z]+)-listings.html$ listings.php?view=$1 [QSA,L]\r\nRewriteRule ^([a-z]+)-listings([0-9]+).html$ listings.php?view=$1&page=$2 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 5', '', 0),
+(NULL, '', 'htaccessfile_6', '# SECTION 6\r\n# mod_rewrite rules for view listing page\r\nRewriteRule ^([^/]+)-l([0-9]+).html$ view-listing.php?cat=&title=$1&id=$2 [QSA,L]\r\nRewriteRule ^(.*)/([^/]+)-l([0-9]+).html$ view-listing.php?cat=$1&title=$2&id=$3 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 6', '', 0),
+(NULL, '', 'htaccessfile_7', '# SECTION 7\r\n# mod_rewrite rules for additional pages\r\nRewriteRule ^p/(.*).html$ page.php?name=$1 [QSA,L]\r\nRewriteRule ^p(.*).html$ page.php?name=$1 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 7', '', 0),
+(NULL, '', 'htaccessfile_8', '# SECTION 8\r\n# mod_rewrite rules for error pages\r\nRewriteRule ^([0-9]+).htm$ error.php?error=$1 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 8', '', 0),
+(NULL, '', 'htaccessfile_9', '# SECTION 9\r\n# mod_rewrite rules for suggest category page\r\nRewriteRule ^suggest-category-([0-9]+).html$ suggest-category.php?id=$1 [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 9', '', 0),
+(NULL, '', 'htaccessfile_10', '# SECTION 10\r\nRewriteRule ^LICENSE.htm$ LICENSE.htm [QSA,L]\r\n\r\n', '', 'hidden', 'htaccess section 10', '', 0),
+(NULL, '', 'htaccessfile_11', '# SECTION 11\r\n# mod_rewrite rules for categories pages\r\nRewriteRule ^(.*)_([0-9]+).html$ index.php?category=$1&page=$2 [QSA,L]\r\nRewriteRule ^(.*).html?(.*)$ index.php?category=$1&$2 [QSA,L]\r\nRewriteRule ^(.*).html$ index.php?category=$1 [QSA,L]\r\n</IfModule>\r\n\r\n', '', 'hidden', 'htaccess section 11', '', 0),
+(NULL, '', 'htaccessfile_12', '# SECTION 12\r\nErrorDocument 500 500.htm\r\nErrorDocument 404 404.htm\r\nErrorDocument 403 403.htm\r\nErrorDocument 401 401.htm', '', 'hidden', 'htaccess section 12', '', 0),
+(NULL, 'admin_panel', 'display_news', '0', '''1'',''0''', 'radio', 'Display eSyndiCat news', '', 4),
+(NULL, 'captcha', 'captcha_name', 'kcaptcha', 'kcaptcha', 'select', 'Name of CAPTCHA', '', 3),
+(NULL, 'captcha', 'captcha_preview', '', '', 'text', 'Captcha preview', '', 3.1),
+(NULL, 'categories', 'categories_tree_type', 'tree', '''tree'',''dropdown'',''simple dropdown''', 'select', 'Category selection method', '', 5.1),
+(NULL, 'general', 'display_frontend', '1', '''1'',''0''', 'radio', 'Display FrontEnd', '', 23),
+(NULL, 'general', 'old_pages_urls', '0', '''0'',''1''', 'radio', 'eSyndiCat 2.2 style pages URLs', '', 20.1),
+(NULL, 'general', 'esyndicat_news_url', 'http://blog.intelliants.com/?view=rss', '', 'hidden', '', '', 0),
+(NULL, 'general', 'site_logo', '', '', 'image', 'Site Logo', '', '3.1'),
+(NULL, 'general', 'site_main_content', '', '', 'textarea', 'Index page content', '', '3.13'),
+(NULL, 'general', 'site_description', '', '', 'textarea', 'Index META description', '', 3.2),
+(NULL, 'general', 'site_keywords', '', '', 'text', 'Index META keywords', '', 3.3),
+(NULL, 'general', 'esyndicat_block_positions', 'left,right,top,center,bottom,user1,user2', '', 'hidden', 'eSyndiCat Block Positions', '', '0'),
+(NULL, 'general', 'ckeditor_color', '#F00', '', 'hidden', 'CKEditor color', '', '0'),
+(NULL, 'general', 'admin_tmpl', 'default', '1', 'hidden', 'Your admin skin template', '', 12.1),
+(NULL, 'listings', 'expiration_period', '', '', 'text', 'Listing expiration period (days)', '', 16),
+(NULL, 'listings', 'expiration_action', '', '', 'text', 'Listing expiration action', '', 17),
+(NULL, 'listing_checking', 'reciprocal_label', 'To validate the reciprocal link please include the following HTML code in the page at the URL specified abovebefore submitting this form:', '', 'textarea', 'Reciprocal text on the suggest listing page', '', 99.96),
+(NULL, 'listing_checking', 'reciprocal_code', '', '', 'textarea', 'Reciprocal code', '', 99.97),
+(NULL, 'general', 'esyndicat_new_plugins_url', 'http://tools.esyndicat.com/new_plugins.php', '', 'hidden', '', '', '0'),
+(NULL, 'admin_panel', 'display_new_plugins', '1', '''1'',''0''', 'radio', 'Display New Plugins', '', '5'),
+(NULL, 'mail', 'smtp_secure_connection', '', ''''',''SSL'',''TSL''', 'select', 'Use secure connection', '', '6.1'),
+(NULL, 'categories', 'categories_display_type', 'vertical', '''vertical'',''horizontal''', 'select', 'Categories display type', '', '4.9'),
+(NULL, 'categories', 'categories_icon_width', '32', '', 'text', 'Category icon width', '', '8.1'),
+(NULL, 'categories', 'categories_icon_height', '32', '', 'text', 'Categories icon height', '', '8.2');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>config_groups table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}config_groups`
+    ADD `name` varchar(50) NOT NULL DEFAULT '' AFTER `id`,
+    ADD `plugin` varchar(50) NOT NULL DEFAULT '' AFTER `name`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>crossed table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}crossed`
+    ADD `category_title` varchar(255) NOT NULL DEFAULT '' AFTER `category_id`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to config_groups table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}config_groups` (`name`, `plugin`, `title`, `order`) VALUES ('miscellaneous', '', 'Miscellaneous', '13');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>hooks table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}hooks`
+    ADD `type` enum('php','html','smarty','plain') NOT NULL DEFAULT 'php' AFTER `name`,
+    MODIFY `status` enum('active','inactive') NOT NULL DEFAULT 'active';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>drop listing_comments table</notes>
+		<query><![CDATA[
+DROP TABLE `{prefix}listing_comments`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>listing_fields table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}listing_fields`
+    ADD `editor` enum('0','1') NOT NULL DEFAULT '0' AFTER `tooltip`,
+    ADD `thumb_width` int(4) NOT NULL DEFAULT '0' AFTER `image_width`,
+    ADD `thumb_height` int(4) NOT NULL DEFAULT '0' AFTER `thumb_width`,
+    ADD `resize_mode` int(4) NOT NULL DEFAULT '1001' AFTER `thumb_height`,
+	CHANGE `pages` `old_pages` SET('0', '1', '2', '3', '4' ) NOT NULL DEFAULT '',
+    ADD `pages` set('suggest','view') NOT NULL DEFAULT '',
+	CHANGE `type` `type` ENUM( 'text', 'textarea', 'combo', 'radio', 'checkbox', 'storage', 'image', 'number', 'pictures' ) NOT NULL DEFAULT 'text';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>listings table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}listings`
+    ADD `plan_id` int(11) NOT NULL DEFAULT '0' AFTER `category_id`,
+    ADD `transaction_id` int(11) NOT NULL DEFAULT '0' AFTER `plan_id`,
+    ADD `partner_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `partner`,
+    ADD `featured_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `featured`,
+    ADD `expire` int(4) NOT NULL DEFAULT '0' AFTER `title`,
+    ADD `action_expire` varchar(20) NOT NULL DEFAULT '' AFTER `expire`,
+	ADD `last_modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `date`,
+    MODIFY `url` varchar(100) NOT NULL DEFAULT '',
+    MODIFY `reciprocal` varchar(100) NOT NULL DEFAULT '',
+    DROP `owner`,
+    DROP `comment`,
+    DROP `partners_start`,
+    DROP `feature_start`,
+    DROP `sponsored_plan_id`,
+    DROP `sponsored_tid`,
+    DROP `comments_active`,
+    DROP `comments_total`,
+    DROP `num_votes`,
+    DROP `rating`,
+    DROP `min_rating`,
+    DROP `max_rating`,
+    DROP `sponsored_notif_sent`,
+    DROP `notif_sent_date`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>pages table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}pages`
+    ADD `plugin` varchar(50) NOT NULL DEFAULT '' AFTER `last_updated`,
+    ADD `custom_url` varchar(255) NOT NULL DEFAULT '' AFTER `non_modrewrite_url`,
+    ADD `meta_description` tinytext NOT NULL DEFAULT '' AFTER `custom_url`,
+    ADD `meta_keywords` tinytext NOT NULL DEFAULT '' AFTER `meta_description`,
+	CHANGE `menus` `old_menus` SET( '1', '2', '3', '4' ) NOT NULL DEFAULT '2',
+    ADD `menus` set('main','bottom','account','inventory') NOT NULL DEFAULT '',
+	MODIFY `status` enum('inactive','active','draft') NOT NULL DEFAULT 'inactive',
+	ADD `readonly` ENUM( '0', '1' ) NOT NULL,
+	ADD `group` VARCHAR( 50 ) NOT NULL DEFAULT '';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to pages table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}pages` (`id`, `name`, `menus`, `status`, `last_updated`, `plugin`, `order`, `unique_url`, `non_modrewrite_url`, `custom_url`, `meta_description`, `meta_keywords`, `nofollow`, `readonly`, `group`) VALUES
+	(NULL, 'accounts', 'main', 'active', NOW(), '', 1.1, 'accounts/', 'accounts.php', '', '', '', '0', '0', 'accounts'),
+	(NULL, 'account_login', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'accounts'),
+	(NULL, 'account_logout', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'accounts'),
+	(NULL, 'payment_canceled', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'payment_complete', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'purchase', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'purchase_complete', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'account_register', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '0', 'accounts'),
+	(NULL, 'thank', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'view_listing', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'edit_listing', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'listings'),
+	(NULL, 'account_password_forgot', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'accounts'),
+	(NULL, 'error', '', 'active', NOW(), '', 0, '', '', '', '', '', '0', '1', 'pages'),
+	(NULL, 'index_browse', '', 'active', NOW(), '', '0', '', '', '', '', '', '0', '0', 'miscellaneous');
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>plans table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}plans`
+    ADD `status` enum('active','inactive') NOT NULL DEFAULT 'active' AFTER `period`,
+    ADD `email_expire` varchar(255) NOT NULL DEFAULT '' AFTER `multicross`,
+    ADD `mark_as` enum('regular','sponsored','featured','partner') NOT NULL DEFAULT 'regular' AFTER `email_expire`,
+    ADD `action_expire` varchar(20) NULL DEFAULT NULL AFTER `mark_as`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>plugins table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}plugins`
+    ADD `id` int(11) NOT NULL auto_increment FIRST,
+    ADD `htaccess` text NOT NULL DEFAULT '' AFTER `summary`,
+    ADD `uninstall_sql` text NOT NULL DEFAULT '' AFTER `uninstall_code`,
+    MODIFY `status` enum('inactive','active','incomplete') NOT NULL DEFAULT 'active',
+    DROP `controller`,
+    DROP `latest_version`,
+    DROP `filelist`,
+    ADD PRIMARY KEY (`id`);
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>transactions table altered</notes>
+		<query><![CDATA[
+ALTER TABLE `{prefix}transactions`
+    ADD `status` varchar(32) NOT NULL DEFAULT '' AFTER `date`,
+    ADD `item` varchar(32) NOT NULL DEFAULT '' AFTER `date`,
+    MODIFY `payment_type` varchar(100) NOT NULL DEFAULT '',
+    CHANGE `listing_id` `item_id` INT( 8 ) NOT NULL DEFAULT '0';
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>drop table votes</notes>
+		<query><![CDATA[
+DROP TABLE `{prefix}votes`;
+		]]></query>
+	</sql>
+
+	<sql>
+		<notes>Insert data to language table</notes>
+		<query><![CDATA[
+INSERT INTO `{prefix}language` (`id`, `key`, `value`, `lang`, `category`, `code`) VALUES
+(NULL, 'are_you_sure_to_delete_selected_accounts', 'Are you sure you want to delete selected accounts?', 'English', 'admin', 'en'),
+(NULL, 'are_you_sure_to_delete_this_page', 'Are you sure you want to delete this page?', 'English', 'admin', 'en'),
+(NULL, 'are_you_sure_to_delete_selected_pages', 'Are you sure you want to delete selected pages?', 'English', 'admin', 'en'),
+(NULL, 'edit_category', 'Edit Category', 'English', 'admin', 'en'),
+(NULL, 'new_account', 'New account', 'English', 'admin', 'en'),
+(NULL, 'cross', 'Cross', 'English', 'admin', 'en'),
+(NULL, 'listings_crossed', 'Listings successfully crossed', 'English', 'admin', 'en'),
+(NULL, 'listing_crossed', 'Listing successfully crossed', 'English', 'admin', 'en'),
+(NULL, 'wyswyg_editor', 'WYSWYG editor', 'English', 'admin', 'en'),
+(NULL, 'manage_transactions', 'Manage Transactions', 'English', 'admin', 'en'),
+(NULL, 'edit_transaction', 'Edit transaction', 'English', 'admin', 'en'),
+(NULL, 'create_transaction', 'Create transaction', 'English', 'admin', 'en'),
+(NULL, 'inactive', 'Inactive', 'English', 'admin', 'en'),
+(NULL, 'error_username_incorrect', 'Make sure you entered valid username.', 'English', 'frontend', 'en'),
+(NULL, 'unconfirmed', 'Unconfirmed', 'English', 'common', 'en'),
+(NULL, 'thumb_width', 'Thumbnail width', 'English', 'admin', 'en'),
+(NULL, 'thumb_height', 'Thumbnail height', 'English', 'admin', 'en'),
+(NULL, 'resize_mode', 'Resize mode', 'English', 'admin', 'en'),
+(NULL, 'expiration_period', 'Expiration Period', 'English', 'admin', 'en'),
+(NULL, 'expiration_period_incorrect', 'Expiration period incorrect. It should be numeric.', 'English', 'admin', 'en'),
+(NULL, 'are_you_sure_to_delete_this_transaction', 'Are you sure to delete this transaction?', 'English', 'admin', 'en'),
+(NULL, 'category_icons', 'Category Icons', 'English', 'admin', 'en'),
+(NULL, 'icon', 'Icon', 'English', 'admin', 'en'),
+(NULL, 'choose_icon', 'Choose icon', 'English', 'admin', 'en'),
+(NULL, 'remove_icon', 'Remove Icon', 'English', 'admin', 'en'),
+(NULL, 'admin_check_new_password', 'Please check your email for confirmation link.', 'English', 'admin', 'en'),
+(NULL, 'admin_new_password_sent', 'The new password has been sent to your email. Please check your email.', 'English', 'admin', 'en'),
+(NULL, 'tab_content_help', 'Useful Links:<br />\r\n<a href="http://www.esyndicat.com/docs/glossary.html" target="_blank">Glossary Of Terms</a><br />\r\n<a href="http://www.esyndicat.com/download/eSyndiCat_acp_v2.2_manual.zip" target="_blank">Admin Panel Manual</a><br />\r\n<a href="http://www.esyndicat.com/support/desk/" target="_blank">HelpDesk</a><br />\r\n<a href="http://www.esyndicat.com/docs/" target="_blank">Documentation</a><br /><br />\r\n\r\nIf you have any questions please ask in the support <a href="http://www.esyndicat.com/forum/" target="_blank">forums</a> or <a href="http://www.esyndicat.com/support/desk/" target="_blank">helpdesk</a>.', 'English', 'admin', 'en'),
+(NULL, 'tab_title_help', 'Help', 'English', 'admin', 'en'),
+(NULL, 'tab_content_search', '<form action="controller.php?file=search" method="get">\r\n<table>\r\n<tr>\r\n	<td width="110">Search Listings:&nbsp;</td>\r\n	<td>\r\n		<input type="hidden" name="file" value="search" />\r\n		<input type="text" class="common question" size="23" name="quick_search" id="quick_search_listing" />\r\n		<input type="submit" class="common" value="Search" />\r\n	</td>\r\n</tr>\r\n</table>\r\n</form>\r\n\r\n<form action="controller.php?file=categories" method="get">\r\n<table>\r\n<tr>\r\n	<td width="110">Search Categories:&nbsp;</td>\r\n	<td>\r\n		<input type="hidden" name="file" value="categories" />\r\n		<input type="text" class="common question" size="23" name="quick_search" id="quick_search_category" />\r\n		<input type="submit" class="common" value="Search" />\r\n	</td>\r\n</tr>\r\n</table>\r\n</form>\r\n\r\n<form action="controller.php?file=accounts" method="get">\r\n<table>\r\n<tr>\r\n	<td width="110">Search Accounts:&nbsp;</td>\r\n	<td>\r\n		<input type="hidden" name="file" value="accounts" />\r\n		<input type="text" class="common question" size="23" name="quick_search" id="quick_search_account" />\r\n		<input type="submit" class="common" value="Search" />\r\n	</td>\r\n</tr>\r\n</table>\r\n</form>', 'English', 'admin', 'en'),
+(NULL, 'tab_title_search', 'Search', 'English', 'admin', 'en'),
+(NULL, 'page_key_incorrect', 'Page key is incorrect.', 'English', 'admin', 'en'),
+(NULL, 'page_menu_incorrect', 'Page menus is incorrect.', 'English', 'admin', 'en'),
+(NULL, 'export_tables_incorrect', 'Please select tables for export.', 'English', 'admin', 'en'),
+(NULL, 'incorrect_permissions', 'Please check permissions.', 'English', 'admin', 'en'),
+(NULL, 'incorrect_username', 'Please input correct username.', 'English', 'admin', 'en'),
+(NULL, 'update_msg', 'eSyndiCat Directory {version} is avaiable. <a href="controller.php?file=update">Please update now.</a>', 'English', 'admin', 'en'),
+(NULL, 'update_version', 'Update Version', 'English', 'admin', 'en'),
+(NULL, 'listing_fields', 'Listing Fields', 'English', 'admin', 'en'),
+(NULL, 'search_sections', 'Search Sections', 'English', 'admin', 'en'),
+(NULL, 'custom_url', 'Custom SEO URL', 'English', 'admin', 'en'),
+(NULL, 'custom_url_exist', 'Page with such custom SEO URL already exist.', 'English', 'admin', 'en'),
+(NULL, 'readme', 'Readme', 'English', 'admin', 'en'),
+(NULL, 'reset_all', 'Reset all', 'English', 'admin', 'en'),
+(NULL, 'reset_backup_alert', 'Please create a backup before resetting any table.', 'English', 'admin', 'en'),
+(NULL, 'reset_success', 'Reset has been successful done.', 'English', 'admin', 'en'),
+(NULL, 'reset_choose_table', 'Please choose any table.', 'English', 'admin', 'en'),
+(NULL, 'esyndicat_news', 'eSyndiCat News', 'English', 'admin', 'en'),
+(NULL, 'auto_generate_password', 'Auto generate password', 'English', 'frontend', 'en'),
+(NULL, 'available_plugins', 'Available Plugins', 'English', 'admin', 'en'),
+(NULL, 'installed_plugins', 'Installed Plugins', 'English', 'admin', 'en'),
+(NULL, 'connection_information', 'Connection Information', 'English', 'admin', 'en'),
+(NULL, 'hostname', 'Hostname', 'English', 'admin', 'en'),
+(NULL, 'update', 'Update', 'English', 'admin', 'en'),
+(NULL, 'update_notice', 'Before updating please backup your database and files.', 'English', 'admin', 'en'),
+(NULL, 'no_updates', 'There is no any updates.', 'English', 'admin', 'en'),
+(NULL, 'can_not_get_method', 'Can not get the coping method.', 'English', 'admin', 'en'),
+(NULL, 'script_success_updated', 'Script has been updated successfully. Your current version is {version}.', 'English', 'admin', 'en'),
+(NULL, 'url_package_empty', 'The package URL is empty.', 'English', 'admin', 'en'),
+(NULL, 'get_package_content_error', 'Error occurs while getting package content.', 'English', 'admin', 'en'),
+(NULL, 'unpack_error', 'Error occurs while unpacking package.', 'English', 'admin', 'en'),
+(NULL, 'ftp_details_error', 'Connection details are wrong.', 'English', 'admin', 'en'),
+(NULL, 'ftp_connect_error', 'Can not connect to server.', 'English', 'admin', 'en'),
+(NULL, 'ftp_login_error', 'Can not login as {username}.', 'English', 'admin', 'en'),
+(NULL, 'license_empty ', 'Your License Number is empty. Please input your license number and save configuration <a href="{url}admin/controller.php?file=configuration">here</a>', 'English', 'admin', 'en'),
+(NULL, 'update_overwrite_note', 'Please note. The update script will overwrite your existing files. If you have any modification please create a backup of your files before updating.<br /><br />Do you want to continue?', 'English', 'admin', 'en'),
+(NULL, 'warning', 'WARNING', 'English', 'admin', 'en'),
+(NULL, 'license_not_valid', 'Your license number is not valid. Please check it in the configuration section.', 'English', 'admin', 'en'),
+(NULL, 'domain_not_valid', 'Your domain name is not valid.', 'English', 'admin', 'en'),
+(NULL, 'listings_chart', 'Listings Chart', 'English', 'admin', 'en'),
+(NULL, 'plugin_description', 'Description', 'English', 'admin', 'en'),
+(NULL, 'plugin_faq', 'FAQ', 'English', 'admin', 'en'),
+(NULL, 'plugin_installation', 'Installation', 'English', 'admin', 'en'),
+(NULL, 'plugin_notes', 'Notes', 'English', 'admin', 'en'),
+(NULL, 'plugin_screenshots', 'Screenshots', 'English', 'admin', 'en'),
+(NULL, 'plugin_documentation', 'Plugin Documentation', 'English', 'admin', 'en'),
+(NULL, 'do_not_display_neighbours', 'Do not display neighbours', 'English', 'admin', 'en'),
+(NULL, 'choose_importer', 'Choose Importer', 'English', 'admin', 'en'),
+(NULL, 'database_name', 'Database Name', 'English', 'admin', 'en'),
+(NULL, 'database_username', 'Database Username', 'English', 'admin', 'en'),
+(NULL, 'database_password', 'Database Password', 'English', 'admin', 'en'),
+(NULL, 'find_database', 'Find Database', 'English', 'admin', 'en'),
+(NULL, 'database_prefix', 'Database Prefix', 'English', 'admin', 'en'),
+(NULL, 'select', 'Select', 'English', 'admin', 'en'),
+(NULL, 'database_host', 'Database Host', 'English', 'admin', 'en'),
+(NULL, 'database_connection_error', 'Could not connect to database.', 'English', 'admin', 'en'),
+(NULL, 'database_selection_error', 'An error occured while selecting database.', 'English', 'admin', 'en'),
+(NULL, 'manage_importer', 'Manage Imports', 'English', 'admin', 'en'),
+(NULL, 'convert_database_complete', 'Convert database successfully complete.', 'English', 'admin', 'en'),
+(NULL, 'assign_account', 'Assign to account', 'English', 'admin', 'en'),
+(NULL, 'existing_account', 'Existing account', 'English', 'admin', 'en'),
+(NULL, 'dont_assign', 'Don not assign', 'English', 'admin', 'en'),
+(NULL, 'xml_parse_error', 'Error occurs while parse XML file', 'English', 'admin', 'en'),
+(NULL, 'xml_file_empty', 'XML file empty.', 'English', 'admin', 'en'),
+(NULL, 'esyndicat_new_plugins', 'eSyndiCat New Plugins', 'English', 'admin', 'en'),
+(NULL, 'quick_search_account_qtip', 'Please input account ID, username or email', 'English', 'admin', 'en'),
+(NULL, 'id', 'ID', 'English', 'admin', 'en'),
+(NULL, 'items_per_page', 'Items per page', 'English', 'admin', 'en'),
+(NULL, 'do', 'Do!', 'English', 'admin', 'en'),
+(NULL, 'error_saving_changes', 'Error saving changes...', 'English', 'admin', 'en'),
+(NULL, 'filter', 'Filter', 'English', 'admin', 'en'),
+(NULL, 'action', 'Action', 'English', 'admin', 'en'),
+(NULL, 'action_confirm', 'Do you really want to {action} [ {listings} ] to {category} category?', 'English', 'admin', 'en'),
+(NULL, 'view_logo', 'View Logo', 'English', 'admin', 'en'),
+(NULL, 'site_logo_image_error', 'Error occurs while uploading site logo image.', 'English', 'admin', 'en'),
+(NULL, 'wrong_site_logo_image_type', 'Only following image types are allowed (<i>{types}</i>) for Site Logo.', 'English', 'admin', 'en'),
+(NULL , 'params_wrong', 'Params are wrong.', 'English', 'admin', 'en'),
+(NULL, 'uploading_site_logo', 'Uploading Site Logo...', 'English', 'admin', 'en'),
+(NULL, 'image_uploaded', '"Image {name} is successfully uploaded.', 'English', 'admin', 'en'),
+(NULL, 'upload_site_logo', 'Upload Site Logo', 'English', 'admin', 'en'),
+(NULL, 'upload', 'Upload', 'English', 'admin', 'en'),
+(NULL, 'are_you_sure_to_delete_selected_icons', 'Do you really want to remove selected icons?', 'English', 'admin', 'en'),
+(NULL, 'select_icon', 'Select a icon', 'English', 'admin', 'en'),
+(NULL, 'uploading_icon', 'Uploading Icon', 'English', 'admin', 'en'),
+(NULL, 'upload_new_category_icon', 'Upload New Category Icon', 'English', 'admin', 'en'),
+(NULL, 'htaccess_file', '.htaccess file', 'English', 'admin', 'en'),
+(NULL, 'copy_to_clipboard', 'Copy to clipboard', 'English', 'admin', 'en'),
+(NULL, 'select_logo', 'Select Site Logo', 'English', 'admin', 'en'),
+(NULL, 'logo', 'Logo', 'English', 'admin', 'en'),
+(NULL, 'add_new_phrase', 'Add new phrase?', 'English', 'admin', 'en'),
+(NULL, 'add_one_more_phrase', 'Would you like to add one more phrase?', 'English', 'admin', 'en'),
+(NULL, 'searching', 'Searching...', 'English', 'admin', 'en'),
+(NULL, 'type_username_email', '-- type your username or email --', 'English', 'admin', 'en'),
+(NULL, 'last_updated', 'Last Updated', 'English', 'admin', 'en'),
+(NULL, 'error_while_doc_tabs', 'Error while getting doc tabs.', 'English', 'admin', 'en'),
+(NULL, 'type_account_username', 'Type account username', 'English', 'admin', 'en'),
+(NULL, 'or', 'OR', 'English', 'common', 'en'),
+(NULL, 'and', 'AND', 'English', 'common', 'en'),
+(NULL, 'type_listing_title', 'Type the listing title...', 'English', 'admin', 'en'),
+(NULL, 'order_number', 'Order Number', 'English', 'admin', 'en'),
+(NULL, 'condition', 'Condition', 'English', 'admin', 'en'),
+(NULL, 'add_transaction', 'Add transaction', 'English', 'admin', 'en'),
+(NULL, 'add_new_transaction', 'Do you want to add new transaction?', 'English', 'admin', 'en'),
+(NULL, 'and_then', 'and then', 'English', 'admin', 'en'),
+(NULL, 'go_to_list', 'Go to list', 'English', 'admin', 'en'),
+(NULL, 'add_another_one', 'Add another one', 'English', 'admin', 'en'),
+(NULL, 'go_to_browse', 'Go to browse', 'English', 'admin', 'en'),
+(NULL, 'go_to_browse_new_category', 'Go to browse new category', 'English', 'admin', 'en'),
+(NULL, 'file_format', 'File Format', 'English', 'admin', 'en'),
+(NULL, 'csv_format', 'CSV format', 'English', 'admin', 'en'),
+(NULL, 'sql_format', 'SQL format', 'English', 'admin', 'en'),
+(NULL, 'newly_added_listings', 'Newly added listings', 'English', 'frontend', 'en'),
+(NULL, 'most_popular_listings', 'Most popular listings', 'English', 'frontend', 'en'),
+(NULL, 'rss_feed', 'RSS feed', 'English', 'frontend', 'en'),
+(NULL, 'quick_search_listing_qtip', 'Please input listing URL, title, description or account username', 'English', 'admin', 'en'),
+(NULL, 'quick_search_category_qtip', 'Please input category title', 'English', 'admin', 'en'),
+(NULL, 'installer_not_removed', 'Installer has not been removed. Please delete install/index.php file immediately!', 'English', 'admin', 'en'),
+(NULL, 'config_writable', 'The includes/config.inc.php still has writable privileges. Please change config.inc.php permissions to non-writable.', 'English', 'admin', 'en'),
+(NULL, 'esyndicat_action_add_favorite', 'Add Favorite', 'English', 'frontend', 'en'),
+(NULL, 'esyndicat_action_remove_favorite', 'Remove Favorite', 'English', 'frontend', 'en'),
+(NULL, 'esyndicat_action_report_listing', 'Report Listing', 'English', 'frontend', 'en'),
+(NULL, 'doc_plugin_not_available', 'Documentation of plugin is not available.', 'English', 'admin', 'en'),
+(NULL, 'plain_text_templates', 'Plain Text Templates', 'English', 'admin', 'en'),
+(NULL, 'html_templates', 'HTML templates', 'English', 'admin', 'en'),
+(NULL, 'nothing', 'Nothing', 'English', 'admin', 'en'),
+(NULL, 'no_captcha_preview', 'No captcha preview', 'English', 'admin', 'en'),
+(NULL, 'quick_jump_to', 'Quick Jump To', 'English', 'admin', 'en'),
+(NULL, 'howdy', 'Howdy', 'English', 'admin', 'en'),
+(NULL, 'iso_code', 'ISO - code', 'English', 'admin', 'en'),
+(NULL, 'digit_only', 'digit only(1-255) default is 100', 'English', 'admin', 'en'),
+(NULL, 'proportional', 'PROPORTIONAL', 'English', 'admin', 'en'),
+(NULL, 'stretch', 'STRETCH', 'English', 'admin', 'en'),
+(NULL, 'fit', 'FIT', 'English', 'admin', 'en'),
+(NULL, 'proportional_tip', 'The mod will attempt to fit the image inside the "frame" create by the width and height arguments.', 'English', 'admin', 'en'),
+(NULL, 'stretch_tip', 'The mod will stretch the image if necessary to fit into that "frame".', 'English', 'admin', 'en'),
+(NULL, 'fit_tip', 'The will attempt to resize the image proportionally only if it does not fit inside the "frame" set by the provided width and height: if it does fit, the image will not be resized at all.', 'English', 'admin', 'en'),
+(NULL, 'show_in_search_as', 'Show in search page as', 'English', 'admin', 'en'),
+(NULL, 'checkboxes', 'Checkboxes Set', 'English', 'admin', 'en'),
+(NULL, 'radios', 'Radios Set', 'English', 'admin', 'en'),
+(NULL, 'dropdown', 'Dropdown List', 'English', 'admin', 'en'),
+(NULL, 'title_for_any', 'Title for "any" meta option', 'English', 'admin', 'en'),
+(NULL, 'cron_for_expiration', 'Cron for changing listing after payment is expired', 'English', 'admin', 'en'),
+(NULL, 'mark_after_submit', 'Mark listing after submit as', 'English', 'admin', 'en'),
+(NULL, 'send_expiration_email', 'Send email in [...] day(s) before expiration', 'English', 'admin', 'en'),
+(NULL, 'assign_fields', 'Assign fields', 'English', 'admin', 'en'),
+(NULL, 'xml_syndication', 'XML syndication', 'English', 'frontend', 'en'),
+(NULL, 'enter_confirmation', 'Please enter confirmation code below', 'English', 'frontend', 'en'),
+(NULL, 'unknown', 'Unknown', 'English', 'frontend', 'en'),
+(NULL, 'new', 'New', 'English', 'common', 'en'),
+(NULL, 'check_listing_fields', 'Please double check your listing fields below.', 'English', 'frontend', 'en'),
+(NULL, 'items_selected', 'items selected', 'English', 'admin', 'en'),
+(NULL, 'no_images', 'No images to display.', 'English', 'admin', 'en'),
+(NULL, 'upload_writable_permission', 'Please set writable permissions for uploads/ directory. chmod 777 uploads/', 'English', 'admin', 'en'),
+(NULL, 'confirm_not_valid', 'Confirmations data is not valid. Please recheck the confirm link.', 'English', 'frontend', 'en'),
+(NULL, 'keywords', 'Keywords', 'English', 'admin', 'en'),
+(NULL, 'check_listing_fields', 'Please recheck your information.', 'English', 'frontend', 'en'),
+(NULL, 'are_you_sure_to_delete_this_deep_link', 'Are you sure you want to delete this deep link?', 'English', 'admin', 'en'),
+(NULL, 'collapsible', 'Collapsible', 'English', 'admin', 'en'),
+(NULL, 'block_options', 'Block Options', 'English', 'admin', 'en'),
+(NULL, 'block_contents', 'Block Contents', 'English', 'admin', 'en'),
+(NULL, 'error_contents', 'Contents is a required field.', 'English', 'common', 'en'),
+(NULL, 'error_title', 'Title field is required.', 'English', 'admin', 'en'),
+(NULL, 'block_languages_empty', 'You need to choose language.', 'English', 'admin', 'en'),
+(NULL, 'error_lang_title', 'Title {lang} field is required.', 'English', 'admin', 'en'),
+(NULL, 'error_lang_contents', 'Contents {lang} field is a required.', 'English', 'admin', 'en'),
+(NULL, 'new', 'New', 'English', 'common', 'en'),
+(NULL, 'are_you_sure_to_logout', 'Are you sure you want to logout?', 'English', 'admin', 'en'),
+(NULL, 'hide_category', 'Hide category', 'English', 'admin', 'en'),
+(NULL, 'go_to_config', 'Go to configuration page of {plugin}', 'English', 'admin', 'en'),
+(NULL, 'go_to_manage', 'Go to manage page of {plugin}', 'English', 'admin', 'en'),
+(NULL, 'upgrade_plugin', 'Run upgrade of the {plugin}', 'English', 'admin', 'en'),
+(NULL, 'manage_templates', 'Manage Templates', 'English', 'admin', 'en'),
+(NULL, 'screenshot', 'Screenshot', 'English', 'admin', 'en'),
+(NULL, 'operation', 'Operation', 'English', 'admin', 'en'),
+(NULL, 'details', 'Details', 'English', 'admin', 'en'),
+(NULL, 'contributor', 'Contributor', 'English', 'admin', 'en'),
+(NULL, 'release_date', 'Release Date', 'English', 'admin', 'en'),
+(NULL, 'esyndicat_version', 'eSyndiCat version', 'English', 'admin', 'en'),
+(NULL, 'template_empty', 'Template doesn''t exists.', 'English', 'admin', 'en'),
+(NULL, 'template_folder_error', 'Template folder doesn''t exist.', 'English', 'admin', 'en'),
+(NULL, 'template_xmlfile_error', 'The XML file of {template} doesn''t exist.', 'English', 'admin', 'en'),
+(NULL, 'template_installed', 'The {template} template successfully installed.', 'English', 'admin', 'en'),
+(NULL, 'date_registration ', 'Date Registration', 'English', 'frontend', 'en'),
+(NULL, 'view_account_details', 'View account details', 'English', 'frontend', 'en'),
+(NULL, 'unique_category_template', 'Use unique template', 'English', 'admin', 'en'),
+(NULL, 'no_accounts', 'There is no any accounts.', 'English', 'frontend', 'en'),
+(NULL, 'no_account_listings', 'Account doesn''t have any listings yet.', 'English', 'frontend', 'en'),
+(NULL, 'page_title_accounts', 'Accounts', 'English', 'page', 'en'),
+(NULL, 'rebuild_htaccess', 'Rebuild htaccess', 'English', 'admin', 'en'),
+(NULL, 'notif_htaccess_permission', 'Please set the writable permission to rebuild the .htaccess file.', 'English', 'admin', 'en'),
+(NULL, 'notification', 'Notification', 'English', 'admin', 'en'),
+(NULL, 'notif_htaccess_rebuilded', 'The .htaccess file has been rebuilded.', 'English', 'admin', 'en'),
+(NULL, 'submitted', 'Submitted', 'English', 'admin', 'en'),
+(NULL, 'preview', 'Preview', 'English', 'admin', 'en'),
+(NULL, 'page_title_index', 'Home', 'English', 'page', 'en'),
+(NULL, 'page_title_new_listings', 'New Listings', 'English', 'page', 'en'),
+(NULL, 'page_title_top_listings', 'Top Listings', 'English', 'page', 'en'),
+(NULL, 'page_title_popular_listings', 'Popular Listings', 'English', 'page', 'en'),
+(NULL, 'page_title_random_listings', 'Random Listings', 'English', 'page', 'en'),
+(NULL, 'page_title_suggest_listing', 'Suggest Listing', 'English', 'page', 'en'),
+(NULL, 'page_title_suggest_category', 'Suggest Category', 'English', 'page', 'en'),
+(NULL, 'page_title_edit_account', 'Edit Account', 'English', 'page', 'en'),
+(NULL, 'page_title_favorites_listings', 'Favorites', 'English', 'page', 'en'),
+(NULL, 'page_title_account_listings', 'My Listings', 'English', 'page', 'en'),
+(NULL, 'page_title_about', 'About Us', 'English', 'page', 'en'),
+(NULL, 'page_title_account_login', 'Account Login', 'English', 'page', 'en'),
+(NULL, 'page_title_payment_complete', 'Payment Complete', 'English', 'page', 'en'),
+(NULL, 'page_title_account_register', 'Account Register', 'English', 'page', 'en'),
+(NULL, 'page_title_edit_listing', 'Edit Listing', 'English', 'page', 'en'),
+(NULL, 'page_title_account_logout', 'Account Logout', 'English', 'page', 'en'),
+(NULL, 'page_title_account_login', 'Account Login', 'English', 'page', 'en'),
+(NULL, 'page_title_thank', 'Thank', 'English', 'page', 'en'),
+(NULL, 'page_title_account_password_forgot', 'Account Password Forgot', 'English', 'page', 'en'),
+(NULL, 'page_title_error', 'Error', 'English', 'page', 'en'),
+(NULL, 'page_title_accounts', 'Accounts', 'English', 'page', 'en'),
+(NULL, 'page_title_payment_canceled', 'Payment Canceled', 'English', 'page', 'en'),
+(NULL, 'page_title_purchase_complete', 'Purchase Complete', 'English', 'page', 'en'),
+(NULL, 'page_title_view_listing', 'View Listing', 'English', 'page', 'en'),
+(NULL, 'page_title_report_broken_listing', 'Report Broken Listing', 'English', 'page', 'en'),
+(NULL, 'miscellaneous', 'Miscellaneous', 'English', 'admin', 'en'),
+(NULL, 'page_title_purchase', 'Purchase', 'English', 'page', 'en'),
+(NULL, 'category_url_will_be', 'Category URL will be', 'English', 'admin', 'en'),
+(NULL, 'page_url_will_be', 'Page URL will be', 'English', 'admin', 'en'),
+(NULL, 'max_num_images', 'Max number of images', 'English', 'admin', 'en'),
+(NULL, 'no_more_files', 'You can not upload more files. Limit exceeded.', 'English', 'frontend', 'en'),
+(NULL, 'category_locked_subcategories_alert', 'This category will be locked. Do you want to have subcategories locked also?', 'English', 'admin', 'en'),
+(NULL, 'category_unlocked_subcategories_alert', 'This category will be unlocked. Do you want to have subcategories unlocked also?', 'English', 'admin', 'en'),
+(NULL, 'hide', 'Hide', 'English', 'admin', 'en'),
+(NULL, 'error_plan_deep_links', 'Please input correct number of deep links. It should contain digits only.', 'English', 'admin', 'en'),
+(NULL, 'error_plan_multicross', 'Please input correct number of multicross. It should contain digits only.', 'English', 'admin', 'en'),
+(NULL, 'logo_image_not_found', 'Logo image cannot be found. Please reupload logo image.', 'English', 'admin', 'en'),
+(NULL, 'page_title_index_browse', 'Browse Categories', 'English', 'page', 'en'),
+(NULL, 'youre_in_preview_mode', 'You are in template preview mode.', 'English', 'frontend', 'en'),
+(NULL, 'import_report', 'Import Report', 'English', 'admin', 'en');
+		]]></query>
+	</sql>
+</import>

@@ -1,0 +1,9 @@
+<Files ~ "\.(sample)$">
+	Order deny,allow
+	Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteBase /install/
+</IfModule>

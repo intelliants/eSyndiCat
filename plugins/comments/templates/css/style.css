@@ -1,0 +1,32 @@
+/* ExStars rating */
+div.exstar-fill
+{
+	width: 30px;
+	height: 30px;
+	background: url('../img/starrating.gif') 0px -30px no-repeat;
+	cursor: pointer;
+	float: left;
+}
+div.exstar-voted-fill
+{
+	width: 30px;
+	height: 30px;
+	background: url('../img/starrating.gif') 0px -60px repeat-x;
+	cursor: pointer;
+	float: left;
+}
+div.exstar-no-fill
+{
+	width: 30px;
+	height: 30px;
+	background: url('../img/starrating.gif') top left repeat-x;
+	cursor: pointer;
+	float: left;
+}
+div.posted p {
+	text-align: right;
+	margin: -14px 0 0 0;
+}
+span.cke_skin_kama {
+	margin: 10px 0 0 0;
+}

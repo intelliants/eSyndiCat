@@ -11,5 +11,5 @@ in eSyndiCat user forums or submit a ticket in our helpdesk!
 
 Thanks for choosing eSyndiCat Directory Script!
 
-The eSyndiCat Team,
+The eSyndiCat Team,<br />
 &copy; 2012 Intelliants LLC

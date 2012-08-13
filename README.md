@@ -10,3 +10,5 @@ If you have any questions you are highly recommended to post them
 in eSyndiCat user forums!
 
 Thanks for choosing eSyndiCat Directory Script!
+
+&copy; 2012 Intelliants LLC

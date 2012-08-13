@@ -7,7 +7,7 @@ More details can be found here:
 http://www.esyndicat.com/free-directory-script.html
 
 If you have any questions you are highly recommended to post them
-in eSyndiCat user forums!
+in eSyndiCat user forums or submit a ticket in our helpdesk!
 
 Thanks for choosing eSyndiCat Directory Script!
 

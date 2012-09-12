@@ -2,6 +2,7 @@ User-agent: *
 Disallow: admin/
 Disallow: includes/
 Disallow: templates/
+Disallow: tmp/
 Disallow: updates/
 Disallow: logout.php
 Disallow: suggest-listing.php

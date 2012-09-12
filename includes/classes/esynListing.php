@@ -811,7 +811,7 @@ class esynListing extends eSyndiCat
 		$sql .= !empty($aFields) && is_array($aFields) ? implode(",", $aFields).',' : '';
 		$sql .= '`t1`.`id`, `t1`.*, ';
 		$sql .= "IF((`t1`.`date` + INTERVAL 7 DAY < NOW()), '0', '1') `interval`,";
-		$sql .= "IF((`t1`.`sponsored` = '1'), '3', IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0'))) `listing_type`, ";
+		$sql .= "IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0')) `listing_type`, ";
 		$sql .= (0 == $aCategory || !$this->mConfig['show_children_listings']) ? '' : '`t11`.`path` `path`, `t11`.`title` `category_title`, ';
 		$sql .= $aAccount ? 'IF((`t1`.`account_id` = \'0\'), \'0\', \'1\') `account_id_edit`, ' : '\'0\' `account_id_edit`, ';
 		$sql .= ($aAccount) ? "IF (`fav_accounts_set` LIKE '%{$aAccount},%', '1', '0') `favorite` " : "'0' `favorite` ";

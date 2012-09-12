@@ -154,16 +154,24 @@ class esynUtil
 				$status = (int)$headers['Status'];
 			}
 			$redirect = in_array($status, array (301, 302), true);
+
 			if ($redirect)
 			{
-				if (substr($headers['Location'], 0, 4) != 'http')
+				$location = isset($headers['Location']) ? $headers['Location'] : $headers['location'];
+
+				if (substr($location, 0, 4) != 'http')
 				{
 					$parsed_url = parse_url($url);
-					$url = $parsed_url['scheme'].'://'.$parsed_url['host'].$headers['Location'];
+
+					$scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] : $parsed_url['Scheme'];
+
+					$host = isset($parsed_url['host']) ? $parsed_url['host'] : $parsed_url['Host'];
+
+					$url = $scheme.'://'.$host.$location;
 				}
 				else
 				{
-					$url = $headers['Location'];
+					$url = $location;
 				}
 			}
 		}
@@ -177,7 +185,7 @@ class esynUtil
 
 			if (preg_match('/^[\d\-]+$/', $checksum))
 			{
-				$pr_url = 'http://toolbarqueries.google.com/search?client=navclient-auto&ch=';
+				$pr_url = 'http://toolbarqueries.google.com/tbr?client=navclient-auto&ch=';
 				$pr_url .= $checksum.'&ie=UTF-8&oe=UTF-8&features=Rank&q=info:'.urlencode($url);
 
 				$pr_content = trim(esynUtil::getPageContent($pr_url));

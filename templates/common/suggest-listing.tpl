@@ -6,7 +6,7 @@
 {include file="notification.tpl"}
 
 <div class="box">
-	<form action="{$smarty.const.ESYN_URL}suggest-listing.php" method="post" id="form_listing" enctype="multipart/form-data">
+	<form action="{$smarty.const.ESYN_URL}suggest-listing.php" method="post" id="form_listing"{* enctype="multipart/form-data"*}>
 	<fieldset style="collapsible">
 		<legend>
 			<span id="categoryTitle">

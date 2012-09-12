@@ -197,7 +197,6 @@ table.categories img
 }
 table.categories td {
 	padding: 10px 10px 10px 0;
-	white-space: nowrap;
 }
 .categories a,
 .categories div.subcategories {

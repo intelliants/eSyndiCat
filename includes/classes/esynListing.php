@@ -230,8 +230,7 @@ class esynListing extends eSyndiCat
 		$sql .= "WHERE t1.`status` = 'active' ";
 		$sql .= "AND t9.`status` = 'active' ";
 		$sql .= "AND t9.`hidden` = '0' ";
-		$sql .= "ORDER BY t1.`rank` DESC, ";	
-		$sql .= "`t1`.`sponsored` DESC, ";
+		$sql .= "ORDER BY t1.`rank` DESC, ";
 		$sql .= "`t1`.`featured` DESC, ";
 		$sql .= "`t1`.`partner` DESC ";
 		
@@ -263,8 +262,7 @@ class esynListing extends eSyndiCat
 		$sql .= "WHERE t1.`status` = 'active' ";
 		$sql .= "AND t9.`status` = 'active' ";
 		$sql .= "AND t9.`hidden` = '0' ";
-		$sql .= "ORDER BY t1.`date` DESC, ";	
-		$sql .= "`t1`.`sponsored` DESC, ";
+		$sql .= "ORDER BY t1.`date` DESC, ";
 		$sql .= "`t1`.`featured` DESC, ";
 		$sql .= "`t1`.`partner` DESC ";
 		$sql .= $aLimit ? "LIMIT {$aStart}, {$aLimit}" : '';
@@ -297,7 +295,6 @@ class esynListing extends eSyndiCat
 		$sql .= "AND t9.`status` = 'active' ";
 		$sql .= "AND t9.`hidden` = '0' ";
 		$sql .= "ORDER BY `clicks` DESC, ";
-		$sql .= "`t1`.`sponsored` DESC, ";
 		$sql .= "`t1`.`featured` DESC, ";
 		$sql .= "`t1`.`partner` DESC ";
 		$sql .= $aLimit ? "LIMIT {$aStart}, {$aLimit}" : '';
@@ -374,7 +371,7 @@ class esynListing extends eSyndiCat
 
 		$sql = "SELECT ".$a." `t1`.*, ";
 		$sql .= "`t44`.`path` `path`, ";
-		$sql .= "IF((`t1`.`sponsored` = '1'), '3', IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0'))) `listing_type` ";
+		$sql .= "IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0')) `listing_type` ";
 		$sql .= "FROM `".$this->mTable."` `t1` ";
 		$sql .= "LEFT JOIN `".$this->mPrefix."categories` `t44` ";
 		$sql .= "ON `t44`.`id` = `t1`.`category_id` ";
@@ -480,22 +477,6 @@ class esynListing extends eSyndiCat
 	}
 
 	/**
-	 * getSponsored 
-	 *
-	 * Returns sponsored listings
-	 * 
-	 * @param int $aCategory category id
-	 * @param int $aStart starting position
-	 * @param int $aLimit number of listings to be returned
-	 * @access public
-	 * @return arr
-	 */
-	function getSponsored($aCategory = 0, $aStart =0, $aLimit = 0)
-	{
-		return $this->getByStatus("sponsored", $aCategory, $aStart, $aLimit);
-	}
-
-	/**
 	 * getByCriteria 
 	 *
 	 * Returns listings by some value
@@ -515,7 +496,7 @@ class esynListing extends eSyndiCat
 			$a = "SQL_CALC_FOUND_ROWS";
 		}
 		$sql = "SELECT ".$a." `t1`.*, ";
-		$sql .= "IF((`t1`.`sponsored` = '1'), '3', IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0'))) `listing_type`, ";
+		$sql .= "IF((`t1`.`featured` = '1'), '2', IF((`t1`.`partner` = '1'), '1', '0')) `listing_type`, ";
 		$sql .= "`t44`.`path` `path`, `t44`.`title` `category_title`, ";
 		$sql .= ($aAccount) ? ", IF (`fav_accounts_set` LIKE '%{$aAccount},%', '1', '0') `favorite` " : "'0' `favorite` ";
 		$sql .= "FROM `".$this->mTable."` `t1` ";
@@ -887,21 +868,6 @@ class esynListing extends eSyndiCat
 		}
 
 		return $temp;
-	}
-	
-	
-	/**
-	 * setPlan 
-	 * 
-	 * @param mixed $listingId 
-	 * @param mixed $planId 
-	 * @param string $tid 
-	 * @access public
-	 * @return void
-	 */
-	function setPlan($listingId, $planId, $tid='')
-	{
-		return parent::update(array("sponsored_tid"=>$tid, "sponsored"=>"1", "sponsored_plan_id"=>$planId, "status" => 'active'), "`id`='".$listingId."'", array("sponsored_start"=>"NOW()"));
 	}
 
 	/**

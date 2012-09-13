@@ -1194,7 +1194,7 @@ BKTN;
 		$subject = "Admin password restoration";
 		$body = "Please follow this URL: {url} in order to reset your password.";
 
-		$url = ESYN_URL.$this->mConfig['admin']."login.php?action=success&code=".urlencode($event['params']['code']);
+		$url = ESYN_URL.ESYN_ADMIN_DIR."/login.php?action=success&code=".urlencode($event['params']['code']);
 
 		$body = str_replace('{url}', $url, $body);
 

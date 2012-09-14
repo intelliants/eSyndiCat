@@ -77,7 +77,7 @@ if((is_array($from) && in_array('category', $from)) || ('category' == $from))
 				$item['link'] = ESYN_URL . 'view-listing.php?id=' . $value['id'];
 			}
 
-			$item['description'] = $value['description'];
+			$item['description'] = truncateText($value['description'], $esynConfig->getConfig('description_num_chars'), '...', '...');
 			$item['date'] = $value['date'];
 
 			$out .= create_rss_item($item);
@@ -131,7 +131,7 @@ if((is_array($from) && in_array('new', $from)) || ('new' == $from))
 				$item['link'] = ESYN_URL . 'view-listing.php?id=' . $value['id'];
 			}
 
-			$item['description'] = $value['description'];
+			$item['description'] = truncateText($value['description'], $esynConfig->getConfig('description_num_chars'), '...', '...');
 			$item['date'] = $value['date'];
 
 			$out .= create_rss_item($item);
@@ -185,7 +185,7 @@ if((is_array($from) && in_array('popular', $from)) || ('popular' == $from))
 				$item['link'] = ESYN_URL . 'view-listing.php?id=' . $value['id'];
 			}
 
-			$item['description'] = $value['description'];
+			$item['description'] = truncateText($value['description'], $esynConfig->getConfig('description_num_chars'), '...', '...');
 			$item['date'] = $value['date'];
 
 			$out .= create_rss_item($item);
@@ -201,7 +201,7 @@ if((is_array($from) && in_array('top', $from)) || ('top' == $from))
 
 	esynUtf8::loadUTF8Core();
 	esynUtf8::loadUTF8Util('utf8_to_ascii');
-	
+	$item['description'] = truncateText($value['description'], $esynConfig->getConfig('description_num_chars'), '', '...', true);
 	$out .= '<title>' . $esynI18N['top_listings'] . '</title>';
     $out .= '<description>' . $esynI18N['top_listings'] . '</description>';
     $out .= '<link>' . ESYN_URL;
@@ -239,7 +239,7 @@ if((is_array($from) && in_array('top', $from)) || ('top' == $from))
 				$item['link'] = ESYN_URL . 'view-listing.php?id=' . $value['id'];
 			}
 
-			$item['description'] = $value['description'];
+			$item['description'] = truncateText($value['description'], $esynConfig->getConfig('description_num_chars'), '...', '...');
 			$item['date'] = $value['date'];
 
 			$out .= create_rss_item($item);
@@ -264,6 +264,42 @@ function create_rss_item($item)
 			
 	return $out;
 }
+
+function truncateText($string, $limit, $break = '...', $pad = '...', $strict = true)
+{
+    // If the $string is shorter than the $limit, return the original source
+    if (strlen($string) <= $limit)
+    {
+        return $string;
+    }
+    
+    // If the string MUST be shorter than the $limit set.
+    // Otherwise shorten to the first $break after the $limit
+    if ($strict)
+    {
+        $string = substr($string, 0, $limit);
+        
+        if (($breakpoint = strrpos($string, $break)) !== false)
+        {
+            $string = substr($string, 0, $breakpoint).$pad;
+        }
+    }
+    else
+    {
+        // If $break is present between $limit and the end of the string
+        if (($breakpoint = strpos($string, $break, $limit)) !== false)
+        {
+            if ($breakpoint < strlen($string) - 1)
+            {
+                $string = substr($string, 0, $breakpoint).$pad;
+            }
+        }
+    }
+    
+    return $string;
+}
+
+
 
 $out .= '</channel>';
 $out .=  '</rss>';

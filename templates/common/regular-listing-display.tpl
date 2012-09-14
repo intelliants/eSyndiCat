@@ -15,7 +15,7 @@
 		{/if}
 	</div>
 
-	<div class="description">{$listing.description|truncate:"300"}</div>
+	<div class="description">{$listing.description|truncate:$config.description_num_chars}</div>
 
 	<div class="url">{$listing.url}</div>
 	<input type="hidden" value="{if isset($instead_thumbnail) && ($listing.$instead_thumbnail neq '')}{$smarty.const.ESYN_URL}uploads/{$listing.$instead_thumbnail}{/if}" />

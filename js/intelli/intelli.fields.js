@@ -85,7 +85,7 @@ intelli.fields = function(conf)
 	var createField = function(conf)
 	{
 		var html = '';
-		var length = conf.length.split(',');
+		var length = intelli.config.description_min_max_length.split(',');
 
 		var min = parseInt(length[0]);
 		var max = parseInt(length[1]);

@@ -911,7 +911,7 @@ class esynListing extends eSyndiCat
 					break;
 
 				case 'textarea':
-					list($minLength, $maxLenght) = explode(',', $value['length']);
+					list($minLength, $maxLenght) = explode(',', $this->mConfig['description_limit']);
 
 					if ($value['required'] && empty($field_value))
 					{

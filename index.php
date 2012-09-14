@@ -29,6 +29,20 @@
  *
  ******************************************************************************/
 
+if (file_exists('.'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'config.inc.php'))
+{
+	include '.'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'config.inc.php';
+}
+else
+{
+	if (file_exists('./install/'))
+	{
+		header('Location: ' . str_replace('index.php', 'install/', $_SERVER['SCRIPT_NAME']));
+
+	}
+
+	exit('Install directory was not found!');
+}
 
 require_once('.'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'header.php');
 

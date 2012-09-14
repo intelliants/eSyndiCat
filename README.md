@@ -13,7 +13,7 @@ Link to eSyndiCat.com may not be removed from the software pages without
 permission of the eSyndiCat respective owners.
 
 Useful links:
-
+-------------
 Installation Manual:	http://www.esyndicat.com/docs/install.html<br />
 eSyndiCat User Forums:	http://www.esyndicat.com/forum/<br />
 eSyndiCat Helpdesk:		http://www.esyndicat.com/desk/<br />

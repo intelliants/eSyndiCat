@@ -43,7 +43,7 @@ require_once('.'.DIRECTORY_SEPARATOR.'header.php');
 $esynAdmin->factory('Category', 'Listing', 'Account');
 
 // get listings by status
-$statuses = array('Approval', 'Banned', 'Suspended', 'Active');
+$statuses = array('Approval', 'Banned', 'Active');
 
 foreach($statuses as $key => $status)
 {

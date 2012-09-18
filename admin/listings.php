@@ -133,13 +133,9 @@ if(isset($_GET['action']))
 			{
 				$where[] = "`listings`.`partner` = '1'";
 			}
-			elseif('sponsored' == $_GET['type'])
-			{
-				$where[] = "`listings`.`sponsored` = '1' ";
-			}
 			elseif('regular' == $_GET['type'])
 			{
-				$where[] = "`listings`.`partner` = '0' AND `listings`.`featured` = '0' AND `listings`.`sponsored` = '0'";
+				$where[] = "`listings`.`partner` = '0' AND `listings`.`featured` = '0'";
 			}
 		}
 
@@ -232,11 +228,6 @@ if(isset($_GET['action']))
 
 				$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['clicks'] . '</b>&nbsp;:&nbsp;' . $listing['clicks'] . '<br />';
 
-				/* modification */
-				/*$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['url'] . '</b>&nbsp;:&nbsp;' . $listing['url'] . '<br />';
-				$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['email'] . '</b>&nbsp;:&nbsp;' . $listing['email'] . '<br />';
-				$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['reciprocal'] . '</b>&nbsp;:&nbsp;' . $listing['reciprocal'] . '<br />';*/
-
 				if($listing['featured'])
 				{
 					$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['featured_since'] . '</b>&nbsp;:&nbsp;' . esynUtil::dateFormat($listing['featured_start']) . '<br />';
@@ -245,16 +236,6 @@ if(isset($_GET['action']))
 				if($listing['partner'])
 				{
 					$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['partner_since'] . '</b>&nbsp;:&nbsp;' . esynUtil::dateFormat($listing['partner_start']) . '<br />';
-				}
-
-				if($listing['sponsored'])
-				{
-					$plan_title = $esynPlan->one("`title`", "`id` = '{$listing['plan_id']}'");
-
-					$unix_time = strtotime("+ {$listing['expire']} day", strtotime($listing['sponsored_start']));
-					$expire_date = date("Y-m-d H:i:s", $unix_time);
-
-					$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['sponsored'] . '</b>&nbsp;:&nbsp;' . $plan_title . '&nbsp;' . $esynI18N['listing_expired'] . '&nbsp;' . esynUtil::dateFormat($expire_date) . '<br />';
 				}
 
 				$out['data'][$key]['listing_details'] .= '<b>' . $esynI18N['submitted'] . '</b>&nbsp;:&nbsp;' . esynUtil::dateFormat($listing['date']) . '<br />';

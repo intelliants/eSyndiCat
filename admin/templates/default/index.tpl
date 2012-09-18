@@ -13,14 +13,6 @@
 			</tr>
 			<tr>
 				<td class="first">
-					<a href="controller.php?file=listings&amp;status=suspended">{$esynI18N.suspended}</a>:
-				</td>
-				<td>
-					<strong>{$listings[2].total}</strong>
-				</td>
-			</tr>
-			<tr>
-				<td class="first">
 					<a href="controller.php?file=listings&amp;status=banned">{$esynI18N.banned}</a>:
 				</td>
 				<td>

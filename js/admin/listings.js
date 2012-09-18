@@ -13,8 +13,7 @@ intelli.listings = function()
 			data : [
 				['active', intelli.admin.lang.active],
 				['approval', intelli.admin.lang.approval],
-				['banned', intelli.admin.lang.banned],
-				['suspended', intelli.admin.lang.suspended]
+				['banned', intelli.admin.lang.banned]
 			]
 		}),
 		statusesStoreFilter: new Ext.data.SimpleStore(
@@ -24,8 +23,7 @@ intelli.listings = function()
 				['all', intelli.admin.lang._status_],
 				['active', intelli.admin.lang.active],
 				['approval', intelli.admin.lang.approval],
-				['banned', intelli.admin.lang.banned],
-				['suspended', intelli.admin.lang.suspended]
+				['banned', intelli.admin.lang.banned]
 			]
 		}),
 		pagingStore: new Ext.data.SimpleStore(
@@ -125,9 +123,6 @@ intelli.exGModel = Ext.extend(intelli.gmodel,
 			{name: 'title', mapping: 'title'},
 			{name: 'account_id', mapping: 'username'},
 			{name: 'category', mapping: 'category'},
-			//MOD: Display payment ID
-			//{name: 'payment_id', mapping: 'payment_id'},
-			//{name: 'payment_status', mapping: 'payment_status'},
 			{name: 'parents', mapping: 'parents'},
 			{name: 'status', mapping: 'status'},
 			{name: 'date', mapping: 'date'},
@@ -185,17 +180,6 @@ intelli.exGModel = Ext.extend(intelli.gmodel,
 			{
 				return String.format('<b><a href="controller.php?file=browse&id={0}">{1}</a></b>', record.json.category_id, value);
 			}
-		//MOD: Display payment ID
-		/*},{
-			header: 'Payment ID', 
-			dataIndex: 'payment_id',
-			sortable: true,
-			width: 80
-		},{
-			header: 'Payment Status', 
-			dataIndex: 'payment_status',
-			sortable: true,
-			width: 90*/
 		},{
 			header: intelli.admin.lang.status,
 			dataIndex: 'status',
@@ -323,21 +307,6 @@ intelli.exGrid = Ext.extend(intelli.grid,
 					id: 'stsFilter'
 				},
 				' ',
-				/*intelli.admin.lang.type + ':',
-				{
-					xtype: 'combo',
-					typeAhead: true,
-					triggerAction: 'all',
-					editable: false,
-					lazyRender: true,
-					store: intelli.listings.typesStore,
-					value: 'all',
-					displayField: 'display',
-					valueField: 'value',
-					mode: 'local',
-					id: 'tpFilter'
-				},
-				' ',*/
 				intelli.admin.lang.state + ':',
 				{
 					xtype: 'combo',

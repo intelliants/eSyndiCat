@@ -673,7 +673,7 @@ if (isset($_POST['save']))
 			}
 			elseif('list' == $_POST['goto'])
 			{
-				$status = isset($_GET['status']) && in_array($_GET['status'], array('active', 'approval', 'suspended', 'banned')) ? '&status=' . $_GET['status'] : '';
+				$status = isset($_GET['status']) && in_array($_GET['status'], array('active', 'approval', 'banned')) ? '&status=' . $_GET['status'] : '';
 
 				esynUtil::go2("controller.php?file=listings" . $status);
 			}

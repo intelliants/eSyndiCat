@@ -8,7 +8,8 @@
 	<base href="{$smarty.const.ESYN_URL}" />
 	<link rel="shortcut icon" href="{$smarty.const.ESYN_URL}favicon.ico" />
 
-	{include_file css="style" base="templates/TMPL/css/"}
+	{assign var=tpl_css value="templates/"|cat:$config.tmpl|cat:"/css/style"}
+	{include_file css="templates/common/css/style, $tpl_css"}
 	{if isset($css)}
 		{include_file css=$css}
 	{/if}
@@ -17,19 +18,25 @@
 		<link rel="alternate" type="application/rss+xml" title="{$category.title|escape:"html"}" href="{$smarty.const.ESYN_URL}feed.php?from=category&amp;id={$category.id}" />
 	{/if}
 	
-	{if isset($view) && $view neq 'random' && isset($listings)}
-		<link rel="alternate" type="application/rss+xml" title="{$category.title|escape:"html"}" href="{$smarty.const.ESYN_URL}feed.php?from={$view}" />
+	{if !isset($category) && isset($view) && $view neq 'random' && isset($listings)}
+		<link rel="alternate" type="application/rss+xml" title="{$config.site|escape:"html"}" href="{$smarty.const.ESYN_URL}feed.php?from={$view}" />
 	{/if}
 
 	<meta name="description" content="{if isset($description) && !empty($description)}{$description|escape:"html"}{/if}" />
 	<meta name="keywords" content="{if isset($keywords) && !empty($keywords)}{$keywords|escape:"html"}{/if}" />
 
-	{assign var="lang_file" value="tmp/cache/intelli.lang."|cat:$config.lang}
-	{include_file js="js/jquery/jquery, js/utils/sessvars, js/intelli/intelli, tmp/cache/intelli.config, $lang_file"}
+	{assign var="lang_file" value=$smarty.const.ESYN_TMP_NAME|cat:"/cache/intelli.lang."|cat:$config.lang}
+
+	{include_file js="js/jquery/jquery, js/utils/sessvars, js/intelli/intelli, js/intelli/intelli.resize"}
+		{include_file js=$smarty.const.ESYN_TMP_NAME|cat:"/cache/intelli.config"}
+	{include_file js=$lang_file}
+
 	{if isset($js)}
 		{include_file js=$js}
 	{/if}
-	
+
+	{include_file js="js/intelli/intelli.minmax, js/intelli/intelli.thumbs, js/intelli/intelli.search, js/intelli/intelli.common, js/frontend/footer"}
+
 	{if $manageMode}
 		{include_file js="js/jquery/plugins/jquery.interface, js/jquery/plugins/jquery.dimensions"}
 		<style type="text/css">

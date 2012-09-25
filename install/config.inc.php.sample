@@ -40,7 +40,8 @@ define("ESYN_CLASSES", ESYN_INCLUDES.'classes'.ESYN_DS);
 
 define("SMARTY_DIR", ESYN_INCLUDES."smarty".ESYN_DS);
 
-define("ESYN_TMP", ESYN_HOME.'tmp'.ESYN_DS);
+define("ESYN_TMP_NAME", 'tmp');
+define("ESYN_TMP", ESYN_HOME.ESYN_TMP_NAME.ESYN_DS);
 define("ESYN_CACHEDIR", ESYN_TMP.'cache'.ESYN_DS);
 
 define("ESYN_ADMIN_DIR", "admin");

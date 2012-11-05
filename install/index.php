@@ -594,7 +594,6 @@ However, eSyndiCat Free will still operate if your settings do not quite match t
 			<?php
 				esynWritableCell('backup', " (optional)");
 				esynWritableCell('tmp');
-				esynWritableCell('plugins', " (optional)");
 				esynWritableCell('uploads', " <br />(optional - used when you create listing field with type \"file storage\" and \"image\")");
 			?>
 			<tr>

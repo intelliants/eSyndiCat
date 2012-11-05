@@ -175,7 +175,7 @@
 		<td width="99%" valign="top" rowspan="2">
 			<textarea class="noresize" rows="4" cols="4" name="query" id="query" style="height: 200px; width: 100%; font-size: 12px; font-family: Verdana;">{if isset($smarty.post.show_query) && $smarty.post.show_query eq '1' && isset($sql_query) && $sql_query neq ''}{$sql_query}{else}SELECT * FROM {/if}</textarea>
 		</td>
-		<td width="50" height="20"><input type="button" value="&#171;" id="addTableButton" />&nbsp;</td>
+		<td width="50" height="20"><input type="button" value="&#171;" id="addTableButton" class="common" style="width:25px;" />&nbsp;</td>
 		<td width="30" valign="top">
 			<select name="table" id="table" size="10" style="font-size: 12px; font-family: Verdana;">
 				{foreach from=$tables item=table}
